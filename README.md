@@ -35,7 +35,7 @@ https://bioarchaeology-seminar.jimdosite.com/
 |17:00-18:00|特別講演, Garrett|
 |18:30-20:30|懇親会|
 
-* 日曜
+* 12/10 (日曜)
 
 |Time|Contents|
 |-|-|
