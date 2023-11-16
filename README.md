@@ -1,6 +1,8 @@
 
 # 第一回 統合生物考古学 セミナー
 
+![Logo](https://i-bioarchaeology.org/site/wp-content/uploads/2023/08/logo.png)
+
 ### 2023/12/9-10＠東京大学本郷キャンパス理学部２号館第二講義室
 
 https://bioarchaeology-seminar.jimdosite.com/
