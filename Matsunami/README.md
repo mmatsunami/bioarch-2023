@@ -11,8 +11,7 @@
 
 ### 使用するデータ
 
-
-##　stacksを使用したチュートリアル
+## stacksを使用したチュートリアル
 
 * https://catchenlab.life.illinois.edu/stacks/manual/
 
