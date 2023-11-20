@@ -1,3 +1,23 @@
 # RAD-seq解析ハンズオン
 
+松波　雅俊（大学院医学研究科先進ゲノム検査医学講座）
+2023年XX月XX日作成
+
+## 準備
+
+### サーバへのログイン
+
+### 使用するプログラム
+
+### 使用するデータ
+
+
+##　stacksを使用したチュートリアル
+
+* https://catchenlab.life.illinois.edu/stacks/
+
+### de novo assemble
+
+
+### with reference genome
 
