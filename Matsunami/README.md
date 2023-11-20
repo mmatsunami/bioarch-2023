@@ -14,7 +14,7 @@
 
 ##　stacksを使用したチュートリアル
 
-* https://catchenlab.life.illinois.edu/stacks/
+* https://catchenlab.life.illinois.edu/stacks/manual/
 
 ### de novo assemble
 
