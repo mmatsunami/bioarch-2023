@@ -19,6 +19,10 @@ ssh node_name
 
 ### 使用するプログラム
 
+```sh
+singularity exec /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
+```
+
 ### 使用するデータ
 
 解析には以下のデータを使用します。
