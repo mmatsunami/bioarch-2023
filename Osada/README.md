@@ -11,3 +11,14 @@ alias gatk='singularity exec /usr/local/biotools/g/gatk4\:4.4.0.0--py36hdfd78af_
 alias bcftools='singularity exec /usr/local/biotools/b/bcftools\:1.18--h8b25389_0 bcftools'
 alias bedtools='singularity exec /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6e_0 bedtools'
 ```
+### fastqファイルの確認
+次の2つのfastqファイルを使います．R1が名前についているファイルはforwardリード，R2が付いているファイルはreverseリードです．長さはそれぞれ150bpです．
+```
+/home/bioarchaeology-pg/data/3/SP01_R1.fq.gz
+/home/bioarchaeology-pg/data/3/SP01_R2.fq.gz
+```
+まずはファイルを確認してみましょう．ファイルはgzipで圧縮されていますが，新しめのシェルであればlessコマンドで直接中身を見ることができます．
+```
+less /home/bioarchaeology-pg/data/3/SP01_R1.fq.gz
+```
+中身を開いてみると，4行で1つのリードを表したデータを見ることができます．4行目はクオリティスコアです．
