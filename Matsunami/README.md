@@ -71,7 +71,18 @@ mv samples/*_R2.2.fq.gz samples/*.2.fq.gz
 
 
 
-
+```sh
+for LOCATION in {FK,OS,SD,SP,TK}; do
+  for NUM in {1..20}; do
+    if [ ${NUM} -lt 10 ]; then
+      ID="${LOCATION}0${NUM}"
+    else
+      ID="${LOCATION}${NUM}"
+    fi
+    echo "${ID}"
+  done
+done
+```
 
 
 ### de novo assemble
