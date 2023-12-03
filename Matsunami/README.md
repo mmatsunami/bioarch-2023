@@ -31,6 +31,8 @@ singularity exec /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
 
 このデータは，EcoRI（切断サイト:G|AATTC）と MseI（切断サイト:T|TAA）という２つの制限酵素でゲノムを断片化し，各ゲノム断片の両端 100bp のペアエンド配列を解読しています。
 
+（*はワイルドカードです）
+
 ```sh
 #RAD-seq data
 /home/bioarchaeology-pg/data/11/rawdata/*.fq.gz
@@ -51,8 +53,22 @@ singularity exec /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
 下記のコマンドでqualtiyの低いリードやアダプター配列を取り除くことができます。
 
 ```sh
-process_radtags -P -1 rawdata/*_R1.fq.gz -2 rawdata/*_R2.fq.gz -o samples -c -q --renz_1 ecoRI --renz_2 mseI
+singularity exec /usr/local/biotools/s/stacks:2.65--hdcf5f25_0　process_radtags -P -1 /home/bioarchaeology-pg/data/11/rawdata/*_R1.fq.gz -2 /home/bioarchaeology-pg/data/11/rawdata/*_R2.fq.gz -o samples -c -q --renz_1 ecoRI --renz_2 mseI
 ```
+解析がうまくいっていれば、フォルダsamplesに*_R1.1.fq.gz, *_R2.2.fq.gz, *_R1.rem.1.fq.gz, *_R2.rem.2.fq.gzの4つのファイルが作られます。
+
+*_R1.1.fq.gz, *_R2.2.fq.gzを以降の解析に使用します。
+
+以降のコマンドで動かすためにファイル名を変更する必要があります。
+
+```sh
+mv samples/*_R1.1.fq.gz samples/*.1.fq.gz
+mv samples/*_R2.2.fq.gz samples/*.2.fq.gz
+```
+以上がdata filteringで使用するコマンドになります。
+
+しかし、このコマンドを100回も打ち込んで動かすのは大変なので、シェルスクリプトを作成し、slurmでjobを投げることで並列計算させましょう。
+
 
 
 
