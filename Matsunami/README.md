@@ -44,6 +44,20 @@ singularity exec /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
 
 * https://catchenlab.life.illinois.edu/stacks/manual/
 
+### data filtering
+
+まず、stacksのprcocess_radtagsコマンドを用いて、data filteringを実施します。
+
+下記のコマンドでqualtiyの低いリードやアダプター配列を取り除くことができます。
+
+```sh
+process_radtags -P -1 rawdata/*_R1.fq.gz -2 rawdata/*_R2.fq.gz -o samples -c -q --renz_1 ecoRI --renz_2 mseI
+```
+
+
+
+
+
 ### de novo assemble
 
 
