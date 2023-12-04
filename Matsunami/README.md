@@ -20,7 +20,9 @@ ssh node_name
 ### 使用するプログラム
 
 ```sh
-singularity exec -B /lustre8,/home　/usr/local/biotools/s/stacks:2.65--hdcf5f25_0
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
+singularity exec -B /lustre8,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0
+singularity exec -B /lustre8,/home /usr/local/biotools/b/bwa:0.7.8--hed695b0_5
 ```
 
 ### 使用するデータ
@@ -283,7 +285,59 @@ ___
 
 リファレンスゲノムがある場合は、まずreadをgenomeにmappingします。
 
-今回は、bwaでmappingします。
+今回は、bwaでmappingします。また、mapping後に.sam fileを.bam fileに変換する必要があります。
+
+先ほどと同じようにシェルスクリプトを作って、slurmで処理しましょう。
+
+まず、下記のシェルスクリプト`bwa_all.sh`を作成します。
+
+```sh
+#!/bin/bash
+#SBATCH --mem=64G 
+
+SAMPLE=$1
+
+module load singularity/3.8.3
+
+#mapping
+singularity exec -B /lustre8,/home /usr/local/biotools/b/bwa:0.7.8--hed695b0_5 \
+bwa mem /home/bioarchaeology-pg/data/11/reference/yaponesia_reference.fasta \
+samples/${SAMPLE}.1.fq.gz \
+samples/${SAMPLE}.2.fq.gz \
+> mapping/${SAMPLE}.sam
+
+#sam2bam
+singularity exec -B /lustre8,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0 \
+samtools view -bS mapping/${SAMPLE}.sam > mapping/${SAMPLE}.bam
+
+#sort
+singularity exec -B /lustre8,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0 \
+samtools sort mapping/${SAMPLE}.bam -o mapping/${SAMPLE}.bam
+```
+
+このスクリプトでは、bwaでreadをリファレンスゲノムにmappingし, samtoolsでファイルをsamからbamフォーマットに変換し、そのあとソートしています。
+
+これをコマンドラインでloopでjobを投げます。
+
+```sh
+mkdir mapping
+mkdir bwa_all_log
+
+for LOCATION in {FK,OS,SD,SP,TK}; do
+  for NUM in {1..20}; do
+    if [ ${NUM} -lt 10 ]; then
+      ID="${LOCATION}0${NUM}"
+    else
+      ID="${LOCATION}${NUM}"
+    fi
+    sbatch -p all -c 1 -n 1 --qos all -o ./bwa_all_log/bwa_all_log.${ID}.log \
+    -e ./bwa_all_log/bwa_all_log.${ID}.error \
+    -J ${ID} \
+    bwa_all.sh ${ID}
+  done
+done
+```
+
 
 
 
