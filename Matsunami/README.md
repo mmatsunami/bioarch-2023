@@ -37,6 +37,9 @@ singularity exec -B /lustre8,/home　/usr/local/biotools/s/stacks:2.65--hdcf5f25
 #RAD-seq data
 /home/bioarchaeology-pg/data/11/rawdata/*.fq.gz
 
+#sample population data
+/home/bioarchaeology-pg/data/11/Popmap.txt
+
 #reference genome
 /home/bioarchaeology-pg/data/11/reference/yaponesia_reference.fasta
 ```
@@ -146,17 +149,52 @@ Submitted batch job XX
 
 #### ustacks
 
+まず、ustacksコマンドでサンプル内で類似しているリードをクラスタリングし、SNPのリストを作ります。
+
+
+#### cstacks
+
+次にcstacksコマンドでサンプル間で共有されているSNPのリストを作成します。
+
+パラメータ_n_でカタログを作る際にミスマッチをいくつ許すかを指定します。
+
+このパラメータは結果への影響が大きいので注意が必要です。
+
+```sh
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+cstacks -P denovo_map -M Popmap.txt -n 5
+```
+
+
+
 #### sstacks
+
+cstacksの結果を元にサンプル・遺伝子座ごとのSNPを決定するのがsstacksコマンドです。
+
+
 
 #### tsv2bam
 
+sstacksの出力をbamファイルに変換し、ペアードエンドリードの場合は2つのリードの情報を統合するのが，tsv2bamコマンドです。
+
 #### gstacks
 
+最後にサンプル全てのSNPのカタログを作成します。
+
+
 #### populations
+
+結果を適切なファイルフォーマットに変換します。
 
 
 
 ### with reference genome
 
 ここではリファレンスゲノムありでのstacksのパイプラインを紹介します。
+
+
+### PCA
+
+リファレンスゲノムありでの解析結果を元にPCA解析を行い、結果をプロットしてみましょう。
+
 
