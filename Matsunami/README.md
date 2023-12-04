@@ -113,11 +113,10 @@ for LOCATION in {FK,OS,SD,SP,TK}; do
     else
       ID="${LOCATION}${NUM}"
     fi
- 　　　　　　sbatch -p all -c 1 -n 1 --qos all \
- 　　　　　　-o ./process_radtags_all_log/process_radtags_all.${ID}.log \
- 　　　　　　-e ./process_radtags_all_log/process_radtags_all.${ID}.error \
- 　　　　　　-J ${ID} \
- 　　　　　　process_radtags_all.sh ${ID}
+    sbatch -p all -c 1 -n 1 --qos all -o ./process_radtags_all_log/process_radtags_all.${ID}.log \
+    -e ./process_radtags_all_log/process_radtags_all.${ID}.error \
+    -J ${ID} \
+    process_radtags_all.sh ${ID}
   done
 done
 ```
