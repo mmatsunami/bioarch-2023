@@ -87,21 +87,30 @@ bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta
 
 同時に，Samblasterソフトウェアを使ってPCR duplicatesをマークします．Samblasterはsamフォーマットの入力を受け取り，マーク済みのsamフォーマットを標準出力に返します．結果をファイルとして保存するにはsamblasterの出力をsamtoolsで受け取って，ファイルに出力します．コマンドは次のようになります．
 ```bash
-bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta SP01_R1.reduced.fastq.gz SP01_R2.reduced.fastq.gz | samblaster | samtools sort -O BAM -o SP01.bam
+bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta SP01_R1.reduced.fastq.gz SP01_R2.reduced.fastq.gz | samblaster | samtools sort -O BAM -o SP01.temp.bam
 ```
-一番最後のプロセスをよく見てみましょう．samtoolsはsamフォーマットのファイルを扱うためのスタンダードなソフトウェアです．受け取ったsamフォーマットのファイルを`samtools view`コマンドで表示します．ただし，ここでは`-o`オプションにより出力ファイルが指定されているので，標準出力ではなくファイルに出力されます．`-O BAM`はbamフォーマットで出力することを指定しています．大規模なプロジェクトであればファイルサイズを減らすために`-O CRAM`でcramファイルとして出力することも考えてみましょう．
+一番最後のプロセスをよく見てみましょう．samtoolsはsamフォーマットのファイルを扱うためのスタンダードなソフトウェアです．受け取ったsamフォーマットのファイルを`samtools sort`コマンドでリファレンスゲノム配列の座標の順番に並べ直します．この作業はほとんどのバリアントコールの前に必要な作業です．ただし，ここでは`-o`オプションにより出力ファイルが指定されているので，標準出力ではなくファイルに出力されます．`-O BAM`はbamフォーマットで出力することを指定しています．大規模なプロジェクトであればファイルサイズを減らすために`-O CRAM`でcramファイルとして出力することも考えてみましょう．
 
 出来上がったbamファイルは次のコマンドで確認できます．samファイルは`less`コマンドで直接表示できますが，bamファイルは圧縮されたファイルなので`samtools view`を使って表示する必要があります．表示が流れるのを防ぐために`less`コマンドにパイプします．
 ```bash
-samtools view SP01.bam | less
+samtools view SP01.temp.bam | less
 ```
 cramファイルも同様に表示できますが，cramファイルを扱うときには常にオプション`-t`でマッピングに使ったリファレンス配列を指定する必要があります．
 
+今後の作業のためにbamファイルのインデックスを作っておく必要があります．
+```bash
+samtools index SP01.temp.bam
+```
+indexを作っておくと，次のようなコマンドを用いてbamファイルの一部を高速に表示することが可能です．
+```bash
+#　1番染色体の1000～2000番目の塩基にマッピングされるリードを表示
+samtools view SP01.temp.bam chr1:1000-2000
+```
 マッピングの結果をPicardソフトウェアで調べてみましょう．`picard CollectWgsMetircs`で平均カバー率などを見ることができます．また，複数サンプルの結果をMultiQCソフトウェアでまとめて表示することも可能です．
 ```bash
-picard CollectWgsMetrics I=SP01.bam O=SP01.picardCWM.txt R=yaponesia_reference.fasta
+picard CollectWgsMetrics -I SP01.bam -O SP01.picardCWM.txt -R yaponesia_reference.fasta
 ```
-結果は指定した`SP01.picardCWM.txt`に記録されます．結果を`less`コマンドで見てみましょう．
+結果は指定した`SP01.picardCWM.txt`に記録されます．結果を`less`コマンドで見てみましょう．MEAN_COVERAGEやMEDIAN＿COVERAGE，カバー率のヒストグラムデータを見ることができます．
 ## バリアントコール（variant calling）
 本実習ではバリアントコールにはGATKを使います．VCFフォーマットを出力するバリアントコール，GVCFフォーマットを出力するバリアントコールの両方を試してみましょう．どちらの場合も`gatk HaplotypeCaller`を使用します．まずはVCFファイルを出力します．
 ```bash
