@@ -422,9 +422,9 @@ col=1:length(levels(factor(Pop$Pop))), pch=20)
 dev.off()
 
 ```
-このような図が
+このような図が描けるはずです。
 
-<img src="plot/PC1vsPC2.jpg" alt="plot/PC1vsPC2.jpg" width="200" height="200">
+<img src="plot/PC1vsPC2.jpg" alt="plot/PC1vsPC2.jpg" width="1000" height="1000">
 
 以上になります。
 
