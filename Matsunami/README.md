@@ -67,7 +67,10 @@ cd 231210RAD_tutorial
 
 ```sh
 singularity exec -B /lustre8,/home　/usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
-process_radtags -P -1 /home/bioarchaeology-pg/data/11/rawdata/*_R1.fq.gz -2 /home/bioarchaeology-pg/data/11/rawdata/*_R2.fq.gz -o samples -c -q --renz_1 ecoRI --renz_2 mseI
+process_radtags -P \
+-1 /home/bioarchaeology-pg/data/11/rawdata/*_R1.fq.gz \
+-2 /home/bioarchaeology-pg/data/11/rawdata/*_R2.fq.gz \
+-o samples -c -q --renz_1 ecoRI --renz_2 mseI
 ```
 解析がうまくいっていれば、フォルダsamplesに`*_R1.1.fq.gz`, `*_R2.2.fq.gz`, `*_R1.rem.1.fq.gz`, `*_R2.rem.2.fq.gz`の4つのファイルが作られます。
 
@@ -275,6 +278,16 @@ ___
 ### with reference genome
 
 ここではリファレンスゲノムありでのstacksのパイプラインを紹介します。
+
+#### mapping
+
+リファレンスゲノムがある場合は、まずreadをgenomeにmappingします。
+
+今回は、bwaでmappingします。
+
+
+
+#### stacks
 
 ___
 ### PCA
