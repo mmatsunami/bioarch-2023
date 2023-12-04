@@ -12,13 +12,13 @@
 ## クオリティチェック（quality checking）
 
 ```
-alias fastp='singularity exec /usr/local/biotools/f/fastp\:0.23.4--hadf994f_2 fastp'
-alias samtools='singularity exec /usr/local/biotools/s/samtools\:0.1.19--h94a8ba4_6 samtools'
-alias bwa='singularity exec /usr/local/biotools/b/bwa\:0.7.8--hed695b0_5 bwa'
-alias samblaster='singularity exec /usr/local/biotools/s/samblaster\:0.1.26--hc9558a2_0 samblaster'
-alias gatk='singularity exec /usr/local/biotools/g/gatk4\:4.4.0.0--py36hdfd78af_0 gatk'
-alias bcftools='singularity exec /usr/local/biotools/b/bcftools\:1.18--h8b25389_0 bcftools'
-alias bedtools='singularity exec /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6e_0 bedtools'
+alias fastp='singularity exec -B /lustre8/home,/home /usr/local/biotools/f/fastp\:0.23.4--hadf994f_2 fastp'
+alias samtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samtools\:0.1.19--h94a8ba4_6 samtools'
+alias bwa='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bwa\:0.7.8--hed695b0_5 bwa'
+alias samblaster='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samblaster\:0.1.26--hc9558a2_0 samblaster'
+alias gatk='singularity exec -B /lustre8/home,/home /usr/local/biotools/g/gatk4\:4.4.0.0--py36hdfd78af_0 gatk'
+alias bcftools='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bcftools\:1.18--h8b25389_0 bcftools'
+alias bedtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6e_0 bedtools'
 ```
 ### fastqファイルの確認
 次の2つのfastqファイルを使います．R1が名前についているファイルはforwardリード，R2が付いているファイルはreverseリードです．長さはそれぞれ150bpです．
@@ -26,11 +26,12 @@ alias bedtools='singularity exec /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6
 /home/bioarchaeology-pg/data/Osada/SP01_R1.fq.gz
 /home/bioarchaeology-pg/data/Osada/SP01_R2.fq.gz
 ```
-それぞれのファイルをワーキングディレクトリにコピーします．
+これらのファイルを参照したいのですが，bioarhaeology-pgのような文字列をいちいち打つのも面倒なので，シンボリックリンクを作ってみます．
 ```
-%cp /home/bioarchaeology-pg/data/Osada/SP01_R1.fq.gz ./
-%cp /home/bioarchaeology-pg/data/Osada/SP01_R2.fq.gz ./
+%ln -s /home/bioarchaeology-pg/data/Osada Osada
 ```
+このようにすることで，working/Osadaが/home/bioarchaeology-pg/data/Osadaを指すようになります．
+
 まずはファイルを確認してみましょう．ファイルはgzipで圧縮されていますが，新しめのシェルであれば`less`コマンドで直接中身を見ることができます．
 ```
 %less SP01_R1.fq.gz
@@ -63,9 +64,9 @@ bwaでインデックスファイルを作成します．この作業により�
 ```
 %bwa index yaponesia_genome.fasta
 ```
-マッピングを行うと，samフォーマットのアラインメントが標準出力に出力されます．ここでは`bwa mem`を使ってペアエンド配列をマッピングします．
+マッピングを行うと，samフォーマットのアラインメントが標準出力に出力されます．ここでは`bwa mem`を使ってペアエンド配列をマッピングします．リファレンス配列，リード配列1，リード配列2の順番で入力します．
 ```
-%bwa mem SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz
+%bwa mem yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz
 ```
 
 
