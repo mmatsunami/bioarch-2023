@@ -149,8 +149,7 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 >```
 ># samples.txt
 >SP01
->SP02
->SP03
+>TK01
 >```
 >次のようなシェルスクリプトを作り，`mapping.sh`として保存します（ファイルはディレクトリ`Osada`にもあります）．
 >```bash
@@ -174,8 +173,17 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 >```
 >この例では，`sample.txt`から受け取った名前を変数`$ID`に格納し，マッピング，重複リードの除去，ソート，バリアントコールによるGVCFファイルの生成までをひとまとめに行っています．実際の解析では，bamファイルやgvcfファイルはそれぞれ異なったディレクトリに保存しておくと良いでしょう．
 >
->GATKによる
-
+>ディレクトリ`Osada`内にある，`samples.txt`, `SP01_R1.fastq.gz`, `SP01_R2.fastq.gz`, `TK01_R1.fastq.gz`, `TK01_R2.fastq.gz`, `mapping_calling.sh`をすべてワーキングディレクトリにコピーしてから`mapping_calling.sh`を実行することによって，2つのGVCFファイル，`SP01.gvcf.gz`, `TK01.gvcf.gz`が作成されます．この2つのファイルは`Osada`ディレクトリにも同じものが入っています．
+>2つのGVCFファイルをGATKを用いて合体させるには，以下のコマンドを用います．
+>```
+>mkdir yaponesiadb
+>gatk GenomicDBImport -V SP01.gvcf.gz -V TK01.gvcf.gz --genomicdb-workspace-path yaponesiadb -L chr1
+>gatk GenotypeGVCFs 
+>```
+>たくさんのサンプルがある場合は，サンプルマップと呼ばれる，サンプル名とGVCFファイル名を対応付けたテキストファイルを作成すると便利でしょう．[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360036883491-GenomicsDBImport)
+>一度データベースとしてGVCFファイルの情報をひとまとめにしてから，`GATK GenotypeGVCFs`というコマンドでジョイントコールを行います．
+## フィルタリング（filtering）
+この実習では簡単にハードフィルタをかけてみます．
 
 
 
