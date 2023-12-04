@@ -69,6 +69,11 @@ mv samples/*_R2.2.fq.gz samples/*.2.fq.gz
 
 しかし、このコマンドを100回も打ち込んで動かすのは大変なので、シェルスクリプトを作成し、slurmでjobを投げることで並列計算させましょう。
 
+まず、シェルスクリプト`process_radtags_all.sh`を作成します。
+
+```sh process_radtags_all.sh
+test
+```
 
 
 ```sh
