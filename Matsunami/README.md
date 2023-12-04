@@ -23,6 +23,7 @@ ssh node_name
 singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
 singularity exec -B /lustre8,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0
 singularity exec -B /lustre8,/home /usr/local/biotools/b/bwa:0.7.8--hed695b0_5
+singularity exec -B /lustre8,/home /usr/local/biotools/p/plink:1.90b6.21--hec16e2b_4
 ```
 
 ### 使用するデータ
@@ -372,17 +373,58 @@ ___
 
 #### plinkでPCA
 
+今回はplinkを用いてPCA解析しましょう。
 
+下記のコマンドで出力されたvcfファイルをplinkのinputフォーマットであるbedファイルに変換し、PCAします。
+
+```sh
+#make dir
+mkdir PCA
+
+#vcf2bed
+singularity exec -B /lustre8,/home /usr/local/biotools/p/plink:1.90b6.21--hec16e2b_4 \
+plink --vcf ref_map/populations.snps.vcf --make-bed --out PCA/populations.snps
+
+#PCA
+singularity exec -B /lustre8,/home /usr/local/biotools/p/plink:1.90b6.21--hec16e2b_4 \
+plink --bfile PCA/populations.snps --out PCA/populations.snps --pca
+
+```
+
+ディレクトリ`PCA`に出力されたpopulations.snps.eigenval`と`populations.snps.eigenvec`の2つのファイルが結果です。
 
 #### plot
+
+結果を描画しましょう。
+
+コマンドラインでRを起動します。
 
 ```sh
 module load r/3.5.2
 R
 ```
 
+Rが起動したら下記の通り打ち込んでください。
+
 ```R
+fn   <- "PCA/populations.snps.eigenvec"
+pfn  <- "/home/bioarchaeology-pg/data/11/Popmap.txt"
+evec <- read.table(fn)
+Pop  <- read.table(pfn, col.names=c("Sample", "Pop"))
+
+jpeg("PC1vsPC2.jpeg", width = 600, height = 600)
+
+pdf("PC1vsPC2.pdf")
+plot(evec$V3, evec$V4, pch=as.numeric(factor(Pop$Pop)),
+col=factor(Pop$Pop), cex=1.8, xlab="PC1", ylab="PC2")
+legend("topright", legend=levels(factor(Pop$Pop)),
+col=1:length(levels(factor(Pop$Pop))), pch=20)
+dev.off()
+
 ```
+このような図が
+
+<img src="plot/PC1vsPC2.jpg" alt="plot/PC1vsPC2.jpg" width="200" height="200">
 
 以上になります。
 
