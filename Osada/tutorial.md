@@ -90,11 +90,27 @@ picard CollectWgsMetics I=SP01.bam O=SP01.picardCWM.txt R=yaponesia_reference.fa
 ```
 結果は指定した`SP01.picardCWM.txt`に記録されます．結果を`less`コマンドで見てみましょう．
 ## バリアントコール（variant calling）
-本実習ではバリアントコールにはGATKを使います．
+本実習ではバリアントコールにはGATKを使います．VCFフォーマットを出力するバリアントコール，GVCFフォーマットを出力するバリアントコールの両方を試してみましょう．どちらの場合も`gatk HaplotypeCaller`を使用します．まずはVCFファイルを出力します．
+```bash
+gatk HaplotypeCaller -I SP01.bam -R yaponesia_reference.fasta -O SP01.vcf.gz
+```
+結果を画面で確認します．
+```bash
+less SP01.vcf.gz
+```
+次に，GVCFフォーマットの出力を行います．
+```bash
+gatk HaplotypeCaller -I SP01.bam -R yaponesia_reference.fasta -O SP01.gvcf.gz
+```
+結果を画面で確認します．
+```bash
+less SP01.gvcf.gz
+```
+GVCFフォーマットには，変異のない部分の情報が含まれていることがわかります．
 
-
-
-
+多数のサンプルのバリアントコールを行う場合は，シェルスクリプトを作成すると効率よく進みます．より簡便な方法では標準コマンドである`xargs`を使うと便利です．`paralllel`コマンドも便利ですが，インストールが必要です．
+>[!NOTE]
+>`xargs`や`parallel`は覚えるとめっちゃ便利です
 
 
 
