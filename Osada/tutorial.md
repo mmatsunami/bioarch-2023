@@ -169,14 +169,15 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 >	echo $ID
 >	RG="@RG\tID:${ID}\tLB:LB\tSM:${ID}\tPL:ILLUMINA"
 >	bwa mem -R $RG yaponesia_reference.fasta ${ID}_R1.fastq.gz ${ID}_R2.fastq.gz | samblaster | samtools sort -O BAM -o ${ID}.bam
+> samtools index ${ID}.bam
 > gatk HaplotypeCaller -I ${ID}.bam -R yaponesia_reference.fasta -O ${ID}.gvcf.gz -ERC GVCF 
 >done < samples.txt
 >```
 >この例では，`sample.txt`から受け取った名前を変数`$ID`に格納し，マッピング，重複リードの除去，ソート，バリアントコールによるGVCFファイルの生成までをひとまとめに行っています．実際の解析では，bamファイルやgvcfファイルはそれぞれ異なったディレクトリに保存しておくと良いでしょう．
 >
->ディレクトリ`Osada`内にある，`samples.txt`, `SP01_R1.fastq.gz`, `SP01_R2.fastq.gz`, `TK01_R1.fastq.gz`, `TK01_R2.fastq.gz`, `mapping_calling.sh`をすべてワーキングディレクトリにコピーしてから`mapping_calling.sh`を実行することによって，2つのGVCFファイル，`SP01.gvcf.gz`, `TK01.gvcf.gz`が作成されます．この2つのファイルは`Osada`ディレクトリにも同じものが入っています．
+>シェルスクリプト`mapping_calling.sh`をワーキングディレクトリにコピーしてから実行することによって，2つのGVCFファイル，`SP01.gvcf.gz`, `TK01.gvcf.gz`がカレントディレクトリに作成されます．`Osada`ディレクトリにも同じものが入っています．
 >2つのGVCFファイルをGATKを用いて合体させるには，以下のコマンドを用います．
->```
+>```bash
 >mkdir yaponesiadb
 >gatk GenomicDBImport -V SP01.gvcf.gz -V TK01.gvcf.gz --genomicdb-workspace-path yaponesiadb -L chr1
 >gatk GenotypeGVCFs 
