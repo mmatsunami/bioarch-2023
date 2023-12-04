@@ -99,7 +99,9 @@ process_radtags -P \
 ```
 
 このシェルスクリプトでは、コマンドライン上で指定されたサンプル名が${SAMPLE}に代入され、コマンドが実行されます。
+
 slurmではコマンドライン上でループを回すことで並列してjobを投げることができます。
+
 下記の通り、コマンドを打ち込んでください。
 
 ```sh
@@ -120,10 +122,37 @@ for LOCATION in {FK,OS,SD,SP,TK}; do
   done
 done
 ```
+これで100サンプルを同時に処理できます。
 
+標準出力に以下のように表示されれば成功です。
+
+ディレクトリ`samples`にoutput filesができるので、確認して下さい。
+
+ちなみにディレクトリ`process_radtags_all_log`にはjobごとのログファイルが出力されています。
+
+```sh
+Submitted batch job XX
+Submitted batch job XX
+...
+```
 
 ### de novo assemble
 
+ここではリファレンスゲノムなしでのstacksのパイプラインを紹介します。
+
+#### ustacks
+
+#### sstacks
+
+#### tsv2bam
+
+#### gstacks
+
+#### populations
+
+
 
 ### with reference genome
+
+ここではリファレンスゲノムありでのstacksのパイプラインを紹介します。
 
