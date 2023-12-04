@@ -21,27 +21,34 @@ alias bedtools='singularity exec /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6
 ### fastqファイルの確認
 次の2つのfastqファイルを使います．R1が名前についているファイルはforwardリード，R2が付いているファイルはreverseリードです．長さはそれぞれ150bpです．
 ```
-/home/bioarchaeology-pg/data/3/SP01_R1.fq.gz
-/home/bioarchaeology-pg/data/3/SP01_R2.fq.gz
+/home/bioarchaeology-pg/data/Osada/SP01_R1.fq.gz
+/home/bioarchaeology-pg/data/Osada/SP01_R2.fq.gz
+```
+それぞれのファイルをワーキングディレクトリにコピーします．
+```
+%cp /home/bioarchaeology-pg/data/Osada/SP01_R1.fq.gz ./
+%cp /home/bioarchaeology-pg/data/Osada/SP01_R2.fq.gz ./
 ```
 まずはファイルを確認してみましょう．ファイルはgzipで圧縮されていますが，新しめのシェルであれば`less`コマンドで直接中身を見ることができます．
 ```
-%less /home/bioarchaeology-pg/data/3/SP01_R1.fq.gz
+%less SP01_R1.fq.gz
 ```
 中身を開いてみると，4行で1つのリードを表したデータを見ることができます．4行目はクオリティスコアです．
 
 ファイルの行数を数えてみましょう．`zcat`コマンドでgzip圧縮されたファイルを標準出力（スクリーン）に表示することができます．その結果を`wc`コマンドにパイプして行数を数えることができます．パイプは`|`という文字で表され，標準出力を次のコマンドの引数として渡すためのものです．
 ```
-%zcat /home/bioarchaeology-pg/data/3/SP01_R1.fq.gz | wc
+%zcat SP01_R1.fq.gz | wc
 ```
-行数を4で割れば配列の本数になります．別の方法として，`grep`コマンドでファイル内の`>`の数を数えることも可能です．
+行数を4で割れば配列の本数になります．別の方法として，`grep`コマンドでファイル内の`@`の数を数えることも可能です．`grep`は入力文字列の検索を行うことができ，非常によく使うコマンドです．
 ```
-%grep '>' /home/bioarchaeology-pg/data/3/SP01_R1.fq.gz | wc
+%zcat SP01_R1.fastq.gz | grep '@' SP01_R1.fq.gz | wc
 ```
+同様に，reverseリードが格納されている`SP01_R2.fq.gz`ファイルについても行数を表示します．bwaなどのマッピングソフトは，fastqファイルが2つに分かれている場合には，上から1つずつ配列を読み込んでいきそれらがペアであるという前提で動いていきます．したがって，`_R1.fastq.gz`と`_R2.fastq.gz`には同じ数の配列が入っている必要があります．2つのファイルで配列の本数が違う場合はSeqkitなどのソフトウェアを用いて配列をきれいに整理してあげる必要があります．
 
-同様に，reverseリードが格納されている`/home/bioarchaeology-pg/data/3/SP01_R2.fq.gz`ファイルについても表示します．bwaなどのマッピングソフトは，fastqファイルが2つに分かれている場合には，上から1つずつ配列を読み込んでいきそれらがペアであるという前提で動いていきます．したがって，`_R1.fastq.gz`と`_R2.fastq.gz`には同じ数の配列が入っている必要があります．2つのファイルで配列の本数が違う場合はSeqkitなどのソフトウェアを用いて配列をきれいに整理してあげる必要があります．
-
-fastpソフトウェアを使ってfastqファイルのフィルタリングをしてみます．標準的なアダプター配列の除去も行ってくれます．
+fastpソフトウェアを使ってfastqファイルのフィルタリングをしてみます．標準的なアダプター配列の除去も行ってくれます．次のコマンドは`fastp`プログラムを用いてペアエンド配列を解析し，フィルターした配列を別のファイル`SP01_R1.clean.fastq.gz`と`SP01_R1.clean.fastq.gz`に出力します．
+```
+%fastp -i SP01_R1.fastq.gz -I SP01_R1.fastq.gz -o SP01_R1.clean.fastq.gz -O SP01_R2.clean.fastq.gz
+```
 
 
 
