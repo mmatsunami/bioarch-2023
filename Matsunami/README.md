@@ -216,26 +216,59 @@ singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0
 cstacks -P denovo_map -M /home/bioarchaeology-pg/data/11/Popmap.txt -n 5
 ```
 
+結果として、ディレクトリ`denovo_map`に`catalog.alleles.tsv.gz`, `catalog.sample_list.tsv.gz`,`catalog.snps.tsv.gz`, `catalog.tags.tsv.gz`の4つのファイルが出力されます。
 
 
 #### sstacks
 
 cstacksの結果を元にサンプル・遺伝子座ごとのSNPを決定するのがsstacksコマンドです。
 
+これもコマンドラインにコマンドを打ち込みましょう。
+
+```sh
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+sstacks -P denovo_map -M /home/bioarchaeology-pg/data/11/Popmap.txt
+```
+
+結果として、ディレクトリ`denovo_map`にサンプルごとに`*.matches.tsv.gz`が出力されます。
 
 
 #### tsv2bam
 
 sstacksの出力をbamファイルに変換し、ペアードエンドリードの場合は2つのリードの情報を統合するのが，tsv2bamコマンドです。
 
+これもコマンドラインにコマンドを打ち込みましょう。
+
+```sh
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+tsv2bam -P denovo_map -M /home/bioarchaeology-pg/data/11/Popmap.txt -R samples
+```
+
+結果として、ディレクトリ`denovo_map`にサンプルごとに`*.matches.bam`が出力されます。
+
 #### gstacks
 
 最後にサンプル全てのSNPのカタログを作成します。
 
+```sh
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+gstacks -P denovo_map -M /home/bioarchaeology-pg/data/11/Popmap.txt
+```
+
+結果として、ディレクトリ`denovo_map`に`catalog.calls`, `catalog.fa.gz`の2つのファイルが出力されます。
 
 #### populations
 
-結果を適切なファイルフォーマットに変換します。
+結果を適切なファイルフォーマットに変換します。今回は、vcfに変換します。
+
+```sh
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+populations -P denovo_map --vcf
+```
+
+結果として、ディレクトリ`denovo_map`にhaplotypeを考慮したvcf file `populations.haps.vcf`と、考慮しないvcf file`populations.snps.vcf`が出力されます。
+
+目的に応じて適切なファイルを以降の解析に使用して下さい。
 
 
 ___
@@ -249,3 +282,7 @@ ___
 リファレンスゲノムありでの解析結果を元にPCA解析を行い、結果をプロットしてみましょう。
 
 
+
+以上になります。
+
+余力があればde novoの場合のPCAなども試してみて下さい。
