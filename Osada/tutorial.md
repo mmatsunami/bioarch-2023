@@ -36,7 +36,7 @@ ln -s /home/bioarchaeology-pg/data/Osada Osada
 ```
 less Osada/SP01_R1.fq.gz
 ```
-中身を開いてみると，4行で1つのリードを表したデータを見ることができます．4行目はクオリティスコアです．
+中身を開いてみると，4行で1つのリードを表したデータを見ることができます．4行目はクオリティスコアです．`less`を終了するには`q`を押します．
 
 ファイルの行数を数えてみましょう．`zcat`コマンドでgzip圧縮されたファイルを標準出力（スクリーン）に表示することができます．その結果を`wc`コマンドにパイプして行数を数えることができます．パイプは`|`という文字で表され，標準出力を次のコマンドの引数として渡すためのものです．
 ```
@@ -76,6 +76,12 @@ bwa mem yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz
 bwa mem yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz | samblaster | samtools view -O BAM -o SP01.bam
 ```
 一番最後のプロセスをよく見てみましょう．samtoolsはsamフォーマットのファイルを扱うためのスタンダードなソフトウェアです．受け取ったsamフォーマットのファイルを`samtools view`コマンドで表示します．ただし，ここでは`-o`オプションにより出力ファイルが指定されているので，標準出力ではなくファイルに出力されます．`-O BAM`はbamフォーマットで出力することを指定しています．大規模なプロジェクトであればファイルサイズを減らすために`-O CRAM`でcramファイルとして出力することも考えてみましょう．
+
+出来上がったbamファイルは次のコマンドで確認できます．samファイルは`less`コマンドで直接表示できますが，bamファイルは圧縮されたファイルなので`samtools view`を使って表示する必要があります．表示が流れるのを防ぐために`less`コマンドにパイプします．
+```
+samtools view SP01.bam | less
+```
+
 
 
 
