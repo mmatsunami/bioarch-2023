@@ -2,7 +2,7 @@
 
 松波　雅俊（琉球大学大学院医学研究科先進ゲノム検査医学講座）
 
-2023年XX月XX日作成
+2023年12月04日作成
 
 ## 準備
 
@@ -424,7 +424,7 @@ dev.off()
 ```
 このような図が描けるはずです。
 
-<img src="plot/PC1vsPC2.jpg" alt="plot/PC1vsPC2.jpg" width="1000" height="1000">
+<img src="plot/PC1vsPC2.jpg" alt="plot/PC1vsPC2.jpg" width="700" height="700">
 
 以上になります。
 
