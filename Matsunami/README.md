@@ -96,6 +96,9 @@ process_radtags -P \
 -2 /home/bioarchaeology-pg/data/11/rawdata/${SAMPLE}_R2.fq.gz \
 -o samples \
 -c -q --renz_1 ecoRI --renz_2 mseI
+
+mv samples/${SAMPLE}_R1.1.fq.gz samples/${SAMPLE}.1.fq.gz
+mv samples/${SAMPLE}_R2.2.fq.gz samples/${SAMPLE}.2.fq.gz
 ```
 
 このシェルスクリプトでは、コマンドライン上で指定されたサンプル名が${SAMPLE}に代入され、コマンドが実行されます。
@@ -124,17 +127,18 @@ done
 ```
 これで100サンプルを同時に処理できます。
 
-標準出力に以下のように表示されれば成功です。
-
-ディレクトリ`samples`にoutput filesができるので、確認して下さい。
-
-ちなみにディレクトリ`process_radtags_all_log`にはjobごとのログファイルが出力されています。
+標準出力に以下のように表示されればjobの投入は成功です。
 
 ```sh
 Submitted batch job XX
 Submitted batch job XX
 ...
 ```
+
+ディレクトリ`samples`にoutput filesができるので、確認して下さい。
+
+ちなみにディレクトリ`process_radtags_all_log`にはjobごとのログファイルが出力されています。
+
 
 ### de novo assemble
 
