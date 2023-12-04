@@ -210,7 +210,7 @@ done
 
 次にcstacksコマンドでサンプル間で共有されているSNPのリストを作成します。
 
-パラメータ　*n*　でカタログを作る際にミスマッチをいくつ許すかを指定します。
+パラメータ*n*でカタログを作る際にミスマッチをいくつ許すかを指定します。
 
 このパラメータは結果への影響が大きいので注意が必要です。
 
@@ -338,10 +338,32 @@ for LOCATION in {FK,OS,SD,SP,TK}; do
 done
 ```
 
-
+ディレクトリ`mapping`にsampleごとに`*.sam`と`*.bam`の2つのファイルが出力されていれば成功です。
 
 
 #### stacks
+
+mapping結果をstacksで処理することでSNPをコールします。
+
+先ほども使用した`gstacks`と`populations`の2つのコマンドを使用します。
+
+```sh
+#make output directory
+mkdir ref_map
+
+#gstacks
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+gstacks -I mapping -M /home/bioarchaeology-pg/data/11/Popmap.txt -O ref_map
+
+#populations
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+populations -P ref_map --vcf
+
+```
+
+これでvcfファイルを出力できました。
+
+リファレンスゲノムがある場合は、リファレンスゲノムがない場合に比べて、用いるコマンドは少なくなります。
 
 ___
 ### PCA
