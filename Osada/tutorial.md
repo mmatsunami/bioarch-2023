@@ -14,12 +14,13 @@ cd working
 
 ```
 alias fastp='singularity exec -B /lustre8/home,/home /usr/local/biotools/f/fastp\:0.23.4--hadf994f_2 fastp'
-alias samtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samtools\:0.1.19--h94a8ba4_6 samtools'
+alias samtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0 samtools'
 alias bwa='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bwa\:0.7.8--hed695b0_5 bwa'
 alias samblaster='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samblaster\:0.1.26--hc9558a2_0 samblaster'
 alias gatk='singularity exec -B /lustre8/home,/home /usr/local/biotools/g/gatk4\:4.4.0.0--py36hdfd78af_0 gatk'
 alias bcftools='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bcftools\:1.18--h8b25389_0 bcftools'
 alias bedtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6e_0 bedtools'
+alias picard='singularity exec -B /lustre8/home,/home /usr/local/biotools/p/picard\:3.0.0--hdfd78af_1 picard'
 ```
 ### fastqファイルの確認
 次の2つのfastqファイルを使います．R1が名前についているファイルはforwardリード，R2が付いているファイルはreverseリードです．長さはそれぞれ150bpです．
@@ -65,16 +66,16 @@ bwaでインデックスファイルを作成します．この作業により�
 ```bash
 bwa index yaponesia_genome.fasta
 ```
-マッピングを行うと，samフォーマットのアラインメントが標準出力に出力されます．ここでは`bwa mem`を使ってペアエンド配列をマッピングします．リファレンス配列，リード配列1，リード配列2の順番で入力します．
+マッピングを行うと，samフォーマットのアラインメントが標準出力に出力されます．ここでは`bwa mem`を使ってペアエンド配列をマッピングします．リファレンス配列，リード配列1，リード配列2の順番で入力します．ここでは，オプション`-R`を使って`-R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA"`のようにリードグループを指定してマッピングを行っています．これは後で使うGATKで必要になるもので，異なったサンプルやライブラリから由来するリードを区別するためのタグになります．他のソフトウェアでもこの情報が使われる場合があります．
 ```bash
-bwa mem yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz
+bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz
 ```
 >[!NOTE]
 >ものすごい勢いで出力が画面に流れるので`Ctrl+C`でプログラムを止める必要があります．
 
 同時に，Samblasterソフトウェアを使ってPCR duplicatesをマークします．Samblasterはsamフォーマットの入力を受け取り，マーク済みのsamフォーマットを標準出力に返します．結果をファイルとして保存するにはsamblasterの出力をsamtoolsで受け取って，ファイルに出力します．コマンドは次のようになります．
 ```bash
-bwa mem yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz | samblaster | samtools view -O BAM -o SP01.bam
+bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz | samblaster | samtools sort -O BAM -o SP01.bam
 ```
 一番最後のプロセスをよく見てみましょう．samtoolsはsamフォーマットのファイルを扱うためのスタンダードなソフトウェアです．受け取ったsamフォーマットのファイルを`samtools view`コマンドで表示します．ただし，ここでは`-o`オプションにより出力ファイルが指定されているので，標準出力ではなくファイルに出力されます．`-O BAM`はbamフォーマットで出力することを指定しています．大規模なプロジェクトであればファイルサイズを減らすために`-O CRAM`でcramファイルとして出力することも考えてみましょう．
 
@@ -110,7 +111,8 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 
 多数のサンプルのバリアントコールを行う場合は，シェルスクリプトを作成すると効率よく進みます．より簡便な方法では標準コマンドである`xargs`を使うと便利です．`paralllel`コマンドも便利ですが，インストールが必要です．
 >[!NOTE]
->`xargs`や`parallel`は覚えるとめっちゃ便利です
+>`xargs`や`parallel`は覚えると非常に便利です
+
 
 
 
