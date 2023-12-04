@@ -30,7 +30,7 @@ singularity exec -B /lustre8,/home /usr/local/biotools/p/plink:1.90b6.21--hec16e
 
 解析には以下のデータを使用します。
 
-シミュレーションによって作成した <i>Fictus yaponesiae</i> 50 個体分（10 個体/集団）の ddRAD-seq データです。
+シミュレーションによって作成した <i>Fictus yaponesiae</i> 100 個体分（20 個体/集団）の ddRAD-seq データです。
 
 このデータは，EcoRI（切断サイト:G|AATTC）と MseI（切断サイト:T|TAA）という２つの制限酵素でゲノムを断片化し，各ゲノム断片の両端 100bp のペアエンド配列を解読しています。
 
