@@ -112,9 +112,18 @@ picard CollectWgsMetrics -I SP01.bam -O SP01.picardCWM.txt -R yaponesia_referenc
 ```
 結果は指定した`SP01.picardCWM.txt`に記録されます．結果を`less`コマンドで見てみましょう．MEAN_COVERAGEやMEDIAN＿COVERAGE，カバー率のヒストグラムデータを見ることができます．
 ## バリアントコール（variant calling）
-本実習ではバリアントコールにはGATKを使います．VCFフォーマットを出力するバリアントコール，GVCFフォーマットを出力するバリアントコールの両方を試してみましょう．どちらの場合も`gatk HaplotypeCaller`を使用します．まずはVCFファイルを出力します．
+本実習ではバリアントコールにはGATKを使います．VCFフォーマットを出力するバリアントコール，GVCFフォーマットを出力するバリアントコールの両方を試してみましょう．どちらの場合も`gatk HaplotypeCaller`を使用します．
+
+HaoplotypeCallerを行うには，picardを用いてリファレンス配列のdictファイルとfaiファイルを作る必要があります．どちらもインデックスファイルです．
 ```bash
-gatk HaplotypeCaller -I SP01.bam -R yaponesia_reference.fasta -O SP01.vcf.gz
+picard CreateSequenceDictionary -R yaponesia_reference.fasta -O yaponesia_reference.dict
+samtools faidx yaponesia_reference.fasta
+```
+
+
+まずはVCFファイルを出力します．bamファイルは先ほど作成した縮小版ではなく，すべてのリードをマッピングしたものを使います．時間を節約するために解析する領域を`-L`オプションで限定します．
+```bash
+gatk HaplotypeCaller -I Osada/SP01.bam -R yaponesia_reference.fasta -O SP01.vcf.gz -L chr1:1-1000000
 ```
 結果を画面で確認します．
 ```bash
@@ -122,18 +131,50 @@ less SP01.vcf.gz
 ```
 次に，GVCFフォーマットの出力を行います．
 ```bash
-gatk HaplotypeCaller -I SP01.bam -R yaponesia_reference.fasta -O SP01.gvcf.gz
+gatk HaplotypeCaller -I SP01.bam -R yaponesia_reference.fasta -O SP01.gvcf.gz -L chr1:1-1000000 -ERC GVCF
 ```
 結果を画面で確認します．
 ```bash
 less SP01.gvcf.gz
 ```
 GVCFフォーマットには，変異のない部分の情報が含まれていることがわかります．
-
-多数のサンプルのバリアントコールを行う場合は，シェルスクリプトを作成すると効率よく進みます．より簡便な方法では標準コマンドである`xargs`を使うと便利です．`paralllel`コマンドも便利ですが，インストールが必要です．
 >[!NOTE]
->`xargs`や`parallel`は覚えると非常に便利です
-
+>現在のバージョンのGATKでは，カバー率（DP）が0のところも`0/0`とコールされる仕様となっていますので注意が必要です．
+### 多検体の処理
+>[!NOTE]
+>多数のサンプルのバリアントコールを行う場合は，シェルスクリプトを作成すると効率よく進みます．より簡便な方法では標準コマンドである`xargs`を使うと便利です．`paralllel`コマンドも便利ですが，インストールが必要です．`xargs`や`parallel`は覚えると非常に便利です．
+>以下は多サンプルを効率よくマッピングするシェルスクリプトの例です．本実習では時間の都合上触れませんが，興味のある方はフォローしてください．
+>
+>まず，サンプル名が1行に1サンプルずつ書かれたテキストファイルを用意します．次は`samples.txt`の中身です．
+>```
+># samples.txt
+>SP01
+>SP02
+>SP03
+>```
+>次のようなシェルスクリプトを作り，`mapping.sh`として保存します（ファイルはディレクトリ`Osada`にもあります）．
+>```bash
+># mapping_calling.sh
+>#! /bin/bash
+>
+># ここはNIGスパコンで使うためのおまじないなので気にしない
+>alias samtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0 samtools'
+>alias bwa='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bwa\:0.7.8--hed695b0_5 bwa'
+>alias samblaster='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samblaster\:0.1.26--hc9558a2_0 samblaster'
+>alias gatk='singularity exec -B /lustre8/home,/home /usr/local/biotools/g/gatk4\:4.4.0.0--py36hdfd78af_0 gatk'
+>
+># ここからが本体
+>while read LINE; do
+>	ID=$LINE
+>	echo $ID
+>	RG="@RG\tID:${ID}\tLB:LB\tSM:${ID}\tPL:ILLUMINA"
+>	bwa mem -R $RG yaponesia_reference.fasta ${ID}_R1.fastq.gz ${ID}_R2.fastq.gz | samblaster | samtools sort -O BAM -o ${ID}.bam
+> gatk HaplotypeCaller -I ${ID}.bam -R yaponesia_reference.fasta -O ${ID}.gvcf.gz -ERC GVCF 
+>done < samples.txt
+>```
+>この例では，`sample.txt`から受け取った名前を変数`$ID`に格納し，マッピング，重複リードの除去，ソート，バリアントコールによるGVCFファイルの生成までをひとまとめに行っています．実際の解析では，bamファイルやgvcfファイルはそれぞれ異なったディレクトリに保存しておくと良いでしょう．
+>
+>GATKによる
 
 
 
