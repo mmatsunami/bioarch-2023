@@ -150,12 +150,40 @@ ___
 
 #### ustacks
 
-まず、ustacksコマンドでサンプル内で類似しているリードをクラスタリングし、SNPのリストを作ります。
+まず、ustacksコマンドでサンプル内で類似しているリードをクラスタリングし、SNPのリストを作ります。以下のコマンドになります。
 
 ```sh
 singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
 ustacks -t gzfastq -f samples/*.1.fq.gz -o denovo_map -i 1 --name * -M 5 -m 3
 ```
+
+**クラスタリングの際にリード間でどれだけのミスマッチを許すかを指定するパラメータ*M*とどれだけのカバレージで読んでいるリードを用いるかを指定するパラメータ*m*は、結果への影響が大きいので、注意して設定して下さい。**
+
+先ほどと同じようにシェルスクリプト`ustaks_all.sh`を作成します。
+
+```sh
+```
+
+
+```sh
+mkdir denovo_map
+mkdir ustacks_all_log
+
+for LOCATION in {FK,OS,SD,SP,TK}; do
+  for NUM in {1..20}; do
+    if [ ${NUM} -lt 10 ]; then
+      ID="${LOCATION}0${NUM}"
+    else
+      ID="${LOCATION}${NUM}"
+    fi
+    sbatch -p all -c 1 -n 1 --qos all -o ./ustacks_all_log/ustacks_all_log.${ID}.log \
+    -e ./ustacks_all_log/ustacks_all_log.${ID}.error \
+    -J ${ID} \
+    ustacks_all.sh ${ID}
+  done
+done
+```
+これで100サンプルを同時に処理できます。
 
 
 #### cstacks
