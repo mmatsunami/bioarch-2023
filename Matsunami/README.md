@@ -142,6 +142,7 @@ Submitted batch job XX
 
 ちなみにディレクトリ`process_radtags_all_log`にはjobごとのログファイルが出力されています。
 
+___
 
 ### de novo assemble
 
@@ -150,6 +151,11 @@ Submitted batch job XX
 #### ustacks
 
 まず、ustacksコマンドでサンプル内で類似しているリードをクラスタリングし、SNPのリストを作ります。
+
+```sh
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+ustacks -t gzfastq -f samples/*.1.fq.gz -o denovo_map -i 1 --name * -M 5 -m 3
+```
 
 
 #### cstacks
@@ -187,12 +193,12 @@ sstacksの出力をbamファイルに変換し、ペアードエンドリード�
 結果を適切なファイルフォーマットに変換します。
 
 
-
+___
 ### with reference genome
 
 ここではリファレンスゲノムありでのstacksのパイプラインを紹介します。
 
-
+___
 ### PCA
 
 リファレンスゲノムありでの解析結果を元にPCA解析を行い、結果をプロットしてみましょう。
