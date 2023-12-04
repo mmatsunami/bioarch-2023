@@ -69,7 +69,7 @@ cd 231210RAD_tutorial
 singularity exec -B /lustre8,/home　/usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
 process_radtags -P -1 /home/bioarchaeology-pg/data/11/rawdata/*_R1.fq.gz -2 /home/bioarchaeology-pg/data/11/rawdata/*_R2.fq.gz -o samples -c -q --renz_1 ecoRI --renz_2 mseI
 ```
-解析がうまくいっていれば、フォルダsamplesに*_R1.1.fq.gz, *_R2.2.fq.gz, *_R1.rem.1.fq.gz, *_R2.rem.2.fq.gzの4つのファイルが作られます。
+解析がうまくいっていれば、フォルダsamplesに`*_R1.1.fq.gz`, `*_R2.2.fq.gz`, `*_R1.rem.1.fq.gz`, `*_R2.rem.2.fq.gz`の4つのファイルが作られます。
 
 このうち、*_R1.1.fq.gz, *_R2.2.fq.gzを以降の解析に使用します。
 
@@ -161,9 +161,22 @@ ustacks -t gzfastq -f samples/*.1.fq.gz -o denovo_map -i 1 --name * -M 5 -m 3
 
 先ほどと同じようにシェルスクリプト`ustaks_all.sh`を作成します。
 
-```sh
+```sh ustaks_all.sh
+#!/bin/bash
+#SBATCH --mem=64G 
+
+SAMPLE=$1
+
+module load singularity/3.8.3
+
+singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
+ustacks -t gzfastq \
+-f samples/${SAMPLE}.1.fq.gz \
+-o denovo_map \
+-i 1 --name ${SAMPLE} -M 5 -m 3
 ```
 
+コマンドラインで下記のようの打ち込むことでjobを投入します。
 
 ```sh
 mkdir denovo_map
@@ -185,6 +198,8 @@ done
 ```
 これで100サンプルを同時に処理できます。
 
+結果として、ディレクトリ`denovo_map`に`*.alleles.tsv.gz`, `*.snps.tsv.gz`,`*.tags.tsv.gz`の3つのファイルが出力されます。
+
 
 #### cstacks
 
@@ -194,9 +209,11 @@ done
 
 このパラメータは結果への影響が大きいので注意が必要です。
 
+今回はコマンドは一度だけなのでそのまま打ち込みましょう。
+
 ```sh
 singularity exec -B /lustre8,/home /usr/local/biotools/s/stacks:2.65--hdcf5f25_0 \
-cstacks -P denovo_map -M Popmap.txt -n 5
+cstacks -P denovo_map -M /home/bioarchaeology-pg/data/11/Popmap.txt -n 5
 ```
 
 
