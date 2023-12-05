@@ -184,10 +184,10 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 >たくさんのサンプルがある場合は，サンプルマップと呼ばれる，サンプル名とGVCFファイル名を対応付けたテキストファイルを作成すると便利でしょう．[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360036883491-GenomicsDBImport)
 >一度データベースとしてGVCFファイルの情報をひとまとめにしてから，`GATK GenotypeGVCFs`というコマンドでジョイントコールを行います．この練習データにはindelの変異は入っていませんので，検出される変異はすべてSNVになります．
 ## フィルタリング（filtering）
-この実習では簡単にハードフィルタをかけてみます．GATKでSNVのために推奨されているハードフィルターを描けます．[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants)
+この実習では簡単にハードフィルタをかけてみます．GATKでSNVのために推奨されているハードフィルターを描けます．
 ```bash
 gatk VariantFiltration \
-  -V SP01_TK01.vcf.gz \
+  -V Osada/SP01_TK01.vcf.gz \
   -filter "QD<2.0" --filter-name "QD2" \
   -filter "QUAL<30.0" --filter-name "QUAL30" \
   -filter "SOR>3.0" --filter-name "SOR3" \
@@ -196,8 +196,24 @@ gatk VariantFiltration \
   -filter "MQRankSum<-12.5" --filter-name "MQRankSum-12.5" \
   -filter "ReadPosRankSum<-8.0" --filter-name "ReadPosRankSum-8" \
   -filter "ExcessHet>30.0" --filter-name "ExcessHet30" \
-  -O SP01_TK01.Hardfilter.vcf.gz
+  -O SP01_TK01.Hardfilter.vcf.gz \
+  -verbosity ERROR
+```
+それぞれのSNVについて，`INFO`列をチェックし，`-filter`で指定されたフィルターに引っかかるものがあると，それに対応するフィルター名`--filter-name`を`FILTER`列に書き出します．この時点ではSNVは取り除かれていません．それぞれのフィルターの意味については[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants)を参照してください．また，ここでは`ExcessHet`として示されているヘテロ接合過剰に関するフィルターもかけています．
 
+結果を表示するといくつかの変異がフィルターに引っかかったのがわかります．フィルターをパスした変異には`PASS`という文字が`FILTER`列に記入されているのがわかります．
+
+最後に，フィルターに引っかかった変異を取り除いてvcfファイルを完成させます．
+```bash
+gatk SelectVariants -V SP01_TK01.Hardfilter.vcf.gz -O SP01_TK01.Hardfiltered.vcf.gz --exclude-filtered
+```
+以下のコマンドでSNVの数を簡便にカウントできます．`grep -v "^#"`は先頭に`#`を含むヘッダー行以外を表示する方法です．
+```bash
+# フィルター前の変異数をカウント
+zcat SP01_TK01.Hardfilter.vcf.gz | grep -v "^#" | wc
+# フィルター後の変異数をカウント
+zcat SP01_TK01.Hardfiltered.vcf.gz | grep -v "^#" | wc
+```
 
 
 
