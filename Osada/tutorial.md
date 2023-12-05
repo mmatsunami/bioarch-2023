@@ -223,6 +223,6 @@ zcat SP01_TK01.Hardfiltered.vcf.gz | grep -v "^#" | wc
 
 vcfファイルの操作には`bcftools`が便利です．次のコマンドは，`SP01_TK01.Hardfiltered.vcf.gz`から，サンプルTK01だけを抜き出します．
 ```bash
-bcftools view -s TK01 -Oz -o SP01.vcf.gz SP01_TK01.Hardfiltered.vcf.gz
+bcftools view -s TK01 -Oz -o SP01.Hardfiltered.vcf.gz SP01_TK01.Hardfiltered.vcf.gz
 ```
 他にも便利な機能がありますので，[bcftoolsのマニュアル](https://samtools.github.io/bcftools/bcftools.html)を確認すると良いでしょう．
