@@ -63,9 +63,12 @@ zcat Osada/SP01_R1.fastq.gz | grep '@' | wc
 
 fastpソフトウェアを使ってfastqファイルのフィルタリングをしてみます．標準的なアダプター配列の除去も行ってくれます．次のコマンドは`fastp`プログラムを用いてペアエンド配列を解析し，フィルターした配列を別のファイル`SP01_R1.clean.fastq.gz`と`SP01_R1.clean.fastq.gz`に出力します．
 ```bash
-fastp -i Osada/SP01_R1.fastq.gz -I Osada/SP01_R2.fastq.gz -o SP01_R1.clean.fastq.gz -O SP01_R2.clean.fastq.gz
+fastp -i Osada/SP01_R1.fastq.gz \
+  -I Osada/SP01_R2.fastq.gz \
+  -o SP01_R1.clean.fastq.gz \
+  -O SP01_R2.clean.fastq.gz
 ```
-ワーキングディレクトリに`fastp.html`というファイルが出力されるので確認してみましょう．sftpソフトを用いて自分のPCにファイルをダウンロードし，ブラウザで確認することができます．
+ここで，行末にある`\`は，コマンドラインがこの画面に収まるようにするために改行を入れる目的で使われる記号です．この部分を削って1行で打ち込んでも構いません．ワーキングディレクトリに`fastp.html`というファイルが出力されるので確認してみましょう．sftpソフトを用いて自分のPCにファイルをダウンロードし，ブラウザで確認することができます．
 ## マッピング（mapping）
 ### fastqファイルの縮小
 fastqファイルの確認とフィルタリングが終わったら，マッピングを行います．今回は練習ですので，解析するリード数を大幅に減らしてみましょう．
@@ -85,14 +88,22 @@ bwa index yaponesia_genome.fasta
 ```
 マッピングを行うと，samフォーマットのアラインメントが標準出力に出力されます．ここでは`bwa mem`を使ってペアエンド配列をマッピングします．リファレンス配列，リード配列1，リード配列2の順番で入力します．ここでは，オプション`-R`を使って`-R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA"`のようにリードグループを指定してマッピングを行っています．これは後で使うGATKで必要になるもので，異なったサンプルやライブラリから由来するリードを区別するためのタグになります．他のソフトウェアでもこの情報が使われる場合があります．
 ```bash
-bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta SP01_R1.clean.fastq.gz SP01_R2.clean.fastq.gz
+bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" \
+  yaponesia_reference.fasta \
+  SP01_R1.clean.fastq.gz \
+  SP01_R2.clean.fastq.gz
 ```
 >[!NOTE]
 >ものすごい勢いで出力が画面に流れるので`Ctrl+C`でプログラムを止める必要があります．
 
 同時に，Samblasterソフトウェアを使ってPCR duplicatesをマークします．Samblasterはsamフォーマットの入力を受け取り，マーク済みのsamフォーマットを標準出力に返します．結果をファイルとして保存するにはsamblasterの出力をsamtoolsで受け取って，ファイルに出力します．コマンドは次のようになります．
 ```bash
-bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" yaponesia_reference.fasta SP01_R1.reduced.fastq.gz SP01_R2.reduced.fastq.gz | samblaster | samtools sort -O BAM -o SP01.temp.bam
+bwa mem -R "@RG\tID:SP01\tLB:LB\tSM:SP01\tPL:ILLUMINA" \
+  yaponesia_reference.fasta \
+  SP01_R1.reduced.fastq.gz \
+  SP01_R2.reduced.fastq.gz \
+  | samblaster \
+  | samtools sort -O BAM -o SP01.temp.bam
 ```
 一番最後のプロセスをよく見てみましょう．samtoolsはsamフォーマットのファイルを扱うためのスタンダードなソフトウェアです．受け取ったsamフォーマットのファイルを`samtools sort`コマンドでリファレンスゲノム配列の座標の順番に並べ直します．この作業はほとんどのバリアントコールの前に必要な作業です．ただし，ここでは`-o`オプションにより出力ファイルが指定されているので，標準出力ではなくファイルに出力されます．`-O BAM`はbamフォーマットで出力することを指定しています．大規模なプロジェクトであればファイルサイズを減らすために`-O CRAM`でcramファイルとして出力することも考えてみましょう．
 
