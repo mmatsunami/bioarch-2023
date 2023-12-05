@@ -197,7 +197,8 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 >gatk GenomicsDBImport -V SP01.gvcf.gz -V TK01.gvcf.gz --genomicsdb-workspace-path yaponesiadb -L chr1
 >gatk GenotypeGVCFs -R yaponesia_reference.fasta -V gendb://yaponesiadb -O SP01_TK01.vcf.gz
 >```
->たくさんのサンプルがある場合は，サンプルマップと呼ばれる，サンプル名とGVCFファイル名を対応付けたテキストファイルを作成すると便利でしょう．[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360036883491-GenomicsDBImport)
+>たくさんのサンプルがある場合は，サンプルマップと呼ばれる，サンプル名とGVCFファイル名を対応付けたテキストファイルを作成すると便利でしょう．サンプルマップの書式は[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360036883491-GenomicsDBImport)を参照してください．
+>
 >一度データベースとしてGVCFファイルの情報をひとまとめにしてから，`GATK GenotypeGVCFs`というコマンドでジョイントコールを行います．この練習データにはindelの変異は入っていませんので，検出される変異はすべてSNVになります．
 ## フィルタリング（filtering）
 この実習では簡単にハードフィルタをかけてみます．GATKでSNVのために推奨されているハードフィルターを描けます．
