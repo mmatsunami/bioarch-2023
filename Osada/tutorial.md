@@ -214,7 +214,6 @@ zcat SP01_TK01.Hardfilter.vcf.gz | grep -v "^#" | wc
 # フィルター後の変異数をカウント
 zcat SP01_TK01.Hardfiltered.vcf.gz | grep -v "^#" | wc
 ```
-
-
+いくつかのSNVがフィルタリングされたことがわかります．
 
 
