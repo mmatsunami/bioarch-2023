@@ -178,14 +178,26 @@ GVCFフォーマットには，変異のない部分の情報が含まれてい�
 >シェルスクリプト`mapping_calling.sh`をワーキングディレクトリにコピーしてから実行することによって，2つのGVCFファイル，`SP01.gvcf.gz`, `TK01.gvcf.gz`がワーキングディレクトリに作成されます．`Osada`ディレクトリにも同じものが入っています．
 >2つのGVCFファイルをGATKを用いて合体させるには，以下のコマンドを用います．
 >```bash
->mkdir yaponesiadb
->gatk GenomicDBImport -V SP01.gvcf.gz -V TK01.gvcf.gz --genomicdb-workspace-path yaponesiadb -L chr1
->gatk GenotypeGVCFs 
+>gatk GenomicsDBImport -V SP01.gvcf.gz -V TK01.gvcf.gz --genomicsdb-workspace-path yaponesiadb -L chr1
+>gatk GenotypeGVCFs -R yaponesia_reference.fasta -V gendb://yaponesiadb -O SP01_TK01.vcf.gz
 >```
 >たくさんのサンプルがある場合は，サンプルマップと呼ばれる，サンプル名とGVCFファイル名を対応付けたテキストファイルを作成すると便利でしょう．[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360036883491-GenomicsDBImport)
->一度データベースとしてGVCFファイルの情報をひとまとめにしてから，`GATK GenotypeGVCFs`というコマンドでジョイントコールを行います．
+>一度データベースとしてGVCFファイルの情報をひとまとめにしてから，`GATK GenotypeGVCFs`というコマンドでジョイントコールを行います．この練習データにはindelの変異は入っていませんので，検出される変異はすべてSNVになります．
 ## フィルタリング（filtering）
-この実習では簡単にハードフィルタをかけてみます．
+この実習では簡単にハードフィルタをかけてみます．GATKでSNVのために推奨されているハードフィルターを描けます．[GATKウェブサイト](https://gatk.broadinstitute.org/hc/en-us/articles/360035890471-Hard-filtering-germline-short-variants)
+```bash
+gatk VariantFiltration \
+  -V SP01_TK01.vcf.gz \
+  -filter "QD<2.0" --filter-name "QD2" \
+  -filter "QUAL<30.0" --filter-name "QUAL30" \
+  -filter "SOR>3.0" --filter-name "SOR3" \
+  -filter "FS>60.0" --filter-name "FS60" \
+  -filter "MQ<40.0" --filter-name "MQ40" \
+  -filter "MQRankSum<-12.5" --filter-name "MQRankSum-12.5" \
+  -filter "ReadPosRankSum<-8.0" --filter-name "ReadPosRankSum-8" \
+  -filter "ExcessHet>30.0" --filter-name "ExcessHet30" \
+  -O SP01_TK01.Hardfilter.vcf.gz
+
 
 
 
