@@ -391,7 +391,7 @@ plink --bfile PCA/populations.snps --out PCA/populations.snps --pca
 
 ```
 
-ディレクトリ`PCA`に出力されたpopulations.snps.eigenval`と`populations.snps.eigenvec`の2つのファイルが結果です。
+ディレクトリ`PCA`に出力された`populations.snps.eigenval`と`populations.snps.eigenvec`の2つのファイルが結果です。
 
 #### plot
 
@@ -411,8 +411,6 @@ fn   <- "PCA/populations.snps.eigenvec"
 pfn  <- "/home/bioarchaeology-pg/data/11/Popmap.txt"
 evec <- read.table(fn)
 Pop  <- read.table(pfn, col.names=c("Sample", "Pop"))
-
-jpeg("PC1vsPC2.jpeg", width = 600, height = 600)
 
 pdf("PC1vsPC2.pdf")
 plot(evec$V3, evec$V4, pch=as.numeric(factor(Pop$Pop)),
