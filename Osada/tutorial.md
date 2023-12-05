@@ -10,9 +10,9 @@ cd working
 `mkdir`コマンドでフォルダを作り，`cd`コマンドでその場所で移動します．
 ## 実習で用いるデータ
 実習で用いるデータは，日本列島で採取された架空の2倍体生物，_Fictus yaponesiae_ から得られたショートリード配列です．日本の5都市（札幌，SP；仙台，SD；東京，TK；大阪，OS；福岡，FK）から10個体ずつサンプリングされています．ゲノム配列は小さく，約23Mbです．
-## クオリティチェック（quality checking）
-
-```
+## 使用するプログラム
+以下のコマンドをコピーしてターミナル上にペーストすることによって，インストール無しでプログラムを使うことができます．
+```bash
 alias fastp='singularity exec -B /lustre8/home,/home /usr/local/biotools/f/fastp\:0.23.4--hadf994f_2 fastp'
 alias samtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/s/samtools:1.18--hd87286a_0 samtools'
 alias bwa='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bwa\:0.7.8--hed695b0_5 bwa'
@@ -22,6 +22,11 @@ alias bcftools='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bc
 alias bedtools='singularity exec -B /lustre8/home,/home /usr/local/biotools/b/bedtools\:2.31.1--hf5e1c6e_0 bedtools'
 alias picard='singularity exec -B /lustre8/home,/home /usr/local/biotools/p/picard\:3.0.0--hdfd78af_1 picard'
 ```
+試しに次のコマンドを売ってみましょう．オプションの一覧が表示されれば成功です．
+```bash
+samtools
+```
+## クオリティチェック（quality checking）
 ### fastqファイルの確認
 次の2つのfastqファイルを使います．R1が名前についているファイルはforwardリード，R2が付いているファイルはreverseリードです．長さはそれぞれ150bpです．
 ```
