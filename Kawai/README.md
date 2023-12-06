@@ -18,8 +18,12 @@ ssh node_name
 ```
 
 設定ファイルをよみこみます。
-`source /home/bioarchaeology-pg/setup.sh`
 
+```
+source /home/bioarchaeology-pg/setup.sh
+# Javaが実行できるか確認
+java --version
+```
 
 ### 使用するプログラム
 
