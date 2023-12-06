@@ -22,4 +22,4 @@ ssh node_name
 [BEAGLE5.4](http://faculty.washington.edu/browning/beagle/beagle.html)
 
 今回はスパコンにダウンロード済みのファイルを使います。
-
+http://faculty.washington.edu/browning/beagle/beagle.22Jul22.46e.jar
