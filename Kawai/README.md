@@ -56,4 +56,8 @@ mkdir phasing
 cd phasing
 ```
 
+## 実行
+```
+java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar gt=/home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz out=yaponesia_SP_250.phased nthreads=8
+```
 
