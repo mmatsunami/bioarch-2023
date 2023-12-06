@@ -57,8 +57,11 @@ cd phasing
 ```
 
 ## 実行
+### BEAGLEでフェージングを実行
 ```
 java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar gt=/home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz out=yaponesia_SP_250.phased nthreads=8
 ```
 この例では`yaponesia_SP_250.vcf.gz`を入力ファイル(`GT=`)にして、`yaponesia_SP_250.phased`をプレフィックスに出力する(`out=`)。`nthreads=8`で実行に使用するCPUの数を指定する。
+終了後にフェージング結果（`yaponesia_SP_250.phased.vcf.gz`）がカレントディレクトリにできていることを確認する。
+
 
