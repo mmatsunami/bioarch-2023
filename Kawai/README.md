@@ -32,4 +32,6 @@ java --version
 今回はスパコンにダウンロード済みのファイルを使います。
 
 #### プログラムの確認
-```
+`java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar`
+
+ヘルプメッセージが表示されることを確認
