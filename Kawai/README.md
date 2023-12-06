@@ -48,4 +48,12 @@ bcftools view /home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz | less -S
 ```
 ここでVCFファイルのフォーマットを確認する。特に遺伝子型が`0/1`のように`/`で区切られていることに注目する。
 
+### 解析ディレクトリの作成
+```
+# ホームディレクトに移動して作業ディレクトリを作成
+cd
+mkdir phasing
+cd phasing
+```
+
 
