@@ -17,3 +17,9 @@ ssh user@gwa.ddbj.nig.ac.jp
 ssh node_name
 ```
 
+### 使用するプログラム
+
+[BEAGLE5.4](http://faculty.washington.edu/browning/beagle/beagle.html)
+
+今回はスパコンにダウンロード済みのファイルを使います。
+
