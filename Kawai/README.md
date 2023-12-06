@@ -46,4 +46,6 @@ ls -l /home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz
 # ファイルの中身の確認
 bcftools view /home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz | less -S
 ```
+ここでVCFファイルのフォーマットを確認する。特に遺伝子型が`0/1`のように`/`で区切られていることに注目する。
+
 
