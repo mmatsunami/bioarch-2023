@@ -35,3 +35,15 @@ java --version
 `java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar`
 
 ヘルプメッセージが表示されることを確認
+
+### 使用するデータ
+シミュレーションで作った250人の擬似的なヒトゲノムデータ(`yaponeasi_SP_250.vcf.gz`)を使います。
+
+#### データの確認
+```
+# ファイルの存在の確認
+ls -l /home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz
+# ファイルの中身の確認
+bcftools view /home/bioarchaeology-pg/kawai/yaponesia_SP_250.vcf.gz | less -S
+```
+
