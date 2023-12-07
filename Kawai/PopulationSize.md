@@ -27,12 +27,14 @@ java --version
 
 ### 使用するプログラム
 
-[BEAGLE5.4](http://faculty.washington.edu/browning/beagle/beagle.html)
+[bcftools](https://github.com/samtools/bcftools)
+[PSMC](https://github.com/lh3/psmc)
 
 今回はスパコンにダウンロード済みのファイルを使います。
 
 #### プログラムの確認
-`java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar`
+`bcftools`
+`psmc`
 
 ヘルプメッセージが表示されることを確認
 
