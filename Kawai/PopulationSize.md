@@ -125,7 +125,13 @@ psmc_plot.pl -u 2.0e-07 -g 1 -x 100 -L -p FK01 FK01.psmc
 >
 >-p : PDFで出力（デフォルトはeps形式)
 
+* 結果の確認
 
+ターミナルで画像ファイルを閲覧することはできないので、ローカルの端末にPDFをダウンロードする。
 
+ローカルのターミナルでscpコマンドで転送する方法
+```
+scp username-pg@gwa.ddbj.nig.ac.jp:/home/username-pg/psmc/FK01.pdf .
+```
 
 
