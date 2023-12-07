@@ -70,3 +70,8 @@ cd psmc
 ## 実行
 ### データの準備
 `bcftools`でBAMファイルからバリアント情報を抽出して、コンセンサス配列をfastq形式で抽出する。
+```
+bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta /home/bioarchaeology-pg/kawai/FK01.bam | bcftools call -c - | vcfutils.pl vcf2fq -d 10 -D 100 | gzip -c > FK01.fq.gz
+```
+
+
