@@ -28,13 +28,16 @@ java --version
 ### 使用するプログラム
 
 [bcftools](https://github.com/samtools/bcftools)
+
 [PSMC](https://github.com/lh3/psmc)
 
 今回はスパコンにダウンロード済みのファイルを使います。
 
 #### プログラムの確認
-`bcftools`
-`psmc`
+```
+bcftools
+psmc
+```
 
 ヘルプメッセージが表示されることを確認
 
