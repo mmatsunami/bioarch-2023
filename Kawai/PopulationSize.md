@@ -133,5 +133,7 @@ psmc_plot.pl -u 2.0e-07 -g 1 -x 100 -L -p FK01 FK01.psmc
 ```
 scp username-pg@gwa.ddbj.nig.ac.jp:/home/username-pg/psmc/FK01.pdf .
 ```
+WinSCP(windows)やcyberduck(mac)で転送することも可能です。
+
 
 
