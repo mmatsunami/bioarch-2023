@@ -80,7 +80,7 @@ bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta 
 >[!NOTE]
 >コマンド入力でバックスラッシュ(`\`)に続けてエンターを入力すると改行される。
 
-#### 出力ファイルの確認
+* 出力ファイルの確認
 ```
 zless FK01.fq.gz
 ```
@@ -92,11 +92,15 @@ zless FK01.fq.gz
 ```
 fq2psmcfa FK01.fq.gz > FK01.psmcfa
 ```
-#### 出力ファイルの確認
+* 出力ファイルの確認
 ```
 less FK01.psmcfa
 ```
-
-
-
+* PSMCの実行
+```
+psmc -t10 -p "10+5*3+4" -o FK01.psmc FK01.psmcfa
+```
+>[!NOTE]
+>-t : 最大の世代数（2N<sub>0</sub>)
+>
 
