@@ -42,7 +42,7 @@ psmc
 ヘルプメッセージが表示されることを確認
 
 ### 使用するデータ
-シミュレーションで作った*Fictus yaponesiae*のゲノムデータ(`FK02.bam`)を使います。
+シミュレーションで作った*Fictus yaponesiae*のゲノムデータ(`FK01.bam`)を使います。
 
 #### データの確認
 * BAMファイル
@@ -59,4 +59,14 @@ samtools view /home/bioarchaeology-pg/kawai/FK01.bam | less -S
 less /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta
 ```
 
+### 解析ディレクトリの作成
+```
+# ホームディレクトに移動して作業ディレクトリを作成
+cd
+mkdir psmc
+cd psmc
+```
 
+## 実行
+### データの準備
+`bcftools`でBAMファイルからバリアント情報を抽出して、コンセンサス配列をfastq形式で抽出する。
