@@ -77,4 +77,9 @@ bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta 
   gzip -c > FK01.fq.gz
 ```
 
+>[!NOTE]
+>コマンド入力でバックスラッシュ(`\`)に続けてエンターを入力すると改行される。
+
+
+
 
