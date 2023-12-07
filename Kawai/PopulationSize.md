@@ -43,3 +43,20 @@ psmc
 
 ### 使用するデータ
 シミュレーションで作った*Fictus yaponesiae*のゲノムデータ(`FK02.bam`)を使います。
+
+#### データの確認
+* BAMファイル
+```
+samtools tview /home/bioarchaeology-pg/kawai/FK01.bam
+```
+表示がうまくいかない場合は
+```
+samtools view /home/bioarchaeology-pg/kawai/FK01.bam | less -S
+```
+
+* リファレンスファイル
+```
+less /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta
+```
+
+
