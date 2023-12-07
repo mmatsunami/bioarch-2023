@@ -124,7 +124,7 @@ samtools view SP01.temp.bam chr1:1000-2000
 ```
 マッピングの結果をPicardソフトウェアで調べてみましょう．`picard CollectWgsMetircs`で平均カバー率などを見ることができます．また，複数サンプルの結果をMultiQCソフトウェアでまとめて表示することも可能です．
 ```bash
-picard CollectWgsMetrics -I SP01.bam -O SP01.picardCWM.txt -R yaponesia_reference.fasta
+picard CollectWgsMetrics -I Osada/SP01.bam -O SP01.picardCWM.txt -R yaponesia_reference.fasta
 ```
 結果は指定した`SP01.picardCWM.txt`に記録されます．結果を`less`コマンドで見てみましょう．MEAN_COVERAGEやMEDIAN＿COVERAGE，カバー率のヒストグラムデータを見ることができます．
 ## バリアントコール（variant calling）
