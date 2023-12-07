@@ -84,9 +84,19 @@ bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta 
 ```
 zless FK01.fq.gz
 ```
+>[!NOTE]
+>gzip圧縮されたデータは`zless`コマンドで中身を確認できる。
+
 
 * PSMCに付属するツール(`fq2psmcfa`)で入力形式に変換する
 ```
 fq2psmcfa FK01.fq.gz > FK01.psmcfa
 ```
+#### 出力ファイルの確認
+```
+less FK01.psmcfa
+```
+
+
+
 
