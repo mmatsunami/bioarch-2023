@@ -69,7 +69,7 @@ cd psmc
 
 ## 実行
 ### データの準備
-`bcftools`でBAMファイルからバリアント情報を抽出して、コンセンサス配列をfastq形式で抽出する。
+* `bcftools`でBAMファイルからバリアント情報を抽出して、コンセンサス配列をfastq形式で抽出する。
 ```
 bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta /home/bioarchaeology-pg/kawai/FK01.bam | \
   bcftools call -c - | \
@@ -80,6 +80,13 @@ bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta 
 >[!NOTE]
 >コマンド入力でバックスラッシュ(`\`)に続けてエンターを入力すると改行される。
 
+#### 出力ファイルの確認
+```
+zless FK01.fq.gz
+```
 
-
+* PSMCに付属するツール(`fq2psmcfa`)で入力形式に変換する
+```
+fq2psmcfa FK01.fq.gz > FK01.psmcfa
+```
 
