@@ -149,6 +149,11 @@ bcftools mpileup -Ou -f Homo_sapiens_assembly38.fasta \
   bcftools call -c - | vcfutils.pl vcf2fq -d 10 -D 100 | gzip -c > CEU_NA12878.fq.gz
 fq2psmcfa CEU_NA12878.fq.gz > CEU_NA12878.psmcfa
 ```
+>[!NOTE]
+>CRAMは圧縮率の高いマッピングファイルのフォーマットです。
+>
+>BAMの半分程度の大きさですが、開く時にリファレンス配列を参照する必要があります。
+
 作成済みのpsmcfaファイルが`/home/bioarchaeology-pg/kawai/`に置いてあります。
 ```
 CEU_NA12878.psmcfa
