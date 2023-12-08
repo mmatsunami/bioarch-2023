@@ -149,7 +149,7 @@ bcftools mpileup -Ou -f Homo_sapiens_assembly38.fasta \
   bcftools call -c - | vcfutils.pl vcf2fq -d 10 -D 100 | gzip -c > CEU_NA12878.fq.gz
 fq2psmcfa CEU_NA12878.fq.gz > CEU_NA12878.psmcfa
 ```
->[!NOTE]
+>[!HINT]
 >CRAMは圧縮率の高いマッピングファイルのフォーマットです。
 >
 >BAMの半分程度の大きさですが、開く時にリファレンス配列を参照する必要があります。
@@ -161,6 +161,11 @@ YRI_NA18496.psmcfa
 JPT_NA18945.psmcfa
 Karitiana_SS6004476.psmcfa
 ```
+* PSMCを実行する
+FK01と同じ手順でPSMCを実行してください。`-p`パラメータで細かく時間を刻むと計算に時間がかかります。
+
+`-p "4+25*2+4+6"`(ヒトゲノムの推奨値)だと２時間ぐらいかかります
+
 
 
 
