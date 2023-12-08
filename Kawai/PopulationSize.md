@@ -138,6 +138,7 @@ WinSCP(windows)やcyberduck(mac)で転送することも可能です。
 ## 実習
 [ヒトゲノムの公共データ](https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット)を使ってPSMCで解析する。
 
-
+遺伝研スパコンの中からは直接アクセス可能です。
+`ls /usr/local/shared_data/public-human-genomes/GRCh38/`
 
 
