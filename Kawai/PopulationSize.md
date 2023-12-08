@@ -139,6 +139,23 @@ WinSCP(windows)やcyberduck(mac)で転送することも可能です。
 [ヒトゲノムの公共データ](https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット)を使ってPSMCで解析する。
 
 遺伝研スパコンの中からは直接アクセス可能です。
+
 `ls /usr/local/shared_data/public-human-genomes/GRCh38/`
+
+* CRAMファイルからPSMCの入力ファイルを作成（時間がないのでハンズオンでは省略）
+```
+bcftools mpileup -Ou -f Homo_sapiens_assembly38.fasta \
+  /usr/local/shared_data/public-human-genomes/GRCh38/1000Genomes/CRAM/NA12878/NA12878.cram | \
+  bcftools call -c - | vcfutils.pl vcf2fq -d 10 -D 100 | gzip -c > CEU_NA12878.fq.gz
+fq2psmcfa CEU_NA12878.fq.gz > CEU_NA12878.psmcfa
+```
+作成済みのpsmcfaファイルが`/home/bioarchaeology-pg/kawai/`に置いてあります。
+```
+CEU_NA12878.psmcfa
+YRI_NA18496.psmcfa
+JPT_NA18945.psmcfa
+Karitiana_SS6004476.psmcfa
+```
+
 
 
