@@ -136,7 +136,7 @@ scp username-pg@gwa.ddbj.nig.ac.jp:/home/username-pg/psmc/FK01.pdf .
 WinSCP(windows)やcyberduck(mac)で転送することも可能です。
 
 ## 実習
-ヒトゲノムの公共データ[https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット]を使ってPSMCで解析する。
+[ヒトゲノムの公共データ](https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット)を使ってPSMCで解析する。
 
 
 
