@@ -112,8 +112,13 @@ admixture yaponesia.bed 2
 for K in 2 3 4 5;  do admixture --cv yaponesia.bed $K | tee log${K}.out; done  
 ```
 
-### 3-5）Rを起動して図を描く
+### 3-5）Rで図を描く
 yaponesia.4.Qを自分のPCにダウンロード
+別の端末を開いて
+```
+scp XXX-pg@gwa.ddbj.nig.ac.jp:popstruct/yaponesia.4.Q .
+```
+Rで
 ```
 tbl=read.table("yaponesia.4.Q")
 png("k4.png", width = 600, height = 300)
