@@ -31,18 +31,23 @@ java --version
 
 [PSMC](https://github.com/lh3/psmc)
 
+[hap-IBD](https://github.com/browning-lab/hap-ibd)
+
+[IBDNe](https://faculty.washington.edu/browning/ibdne.html)
 今回はスパコンにダウンロード済みのファイルを使います。
 
 #### プログラムの確認
 ```
 bcftools
 psmc
+java -jar /home/bioarchaeology-pg/kawai/hap-ibd.jar
+java -jar /home/bioarchaeology-pg/kawai/ibdne.23Apr20.ae9.jar
 ```
 
 ヘルプメッセージが表示されることを確認
 
 ### 使用するデータ
-シミュレーションで作った*Fictus yaponesiae*のゲノムデータ(`FK01.bam`)を使います。
+シミュレーションで作った*Fictus yaponesiae*のゲノムデータ(`FK01.bam`)とフェージング済み日本人ゲノムデータ使います。
 
 #### データの確認
 * BAMファイル
@@ -57,6 +62,11 @@ samtools view /home/bioarchaeology-pg/kawai/FK01.bam | less -S
 * リファレンスファイル
 ```
 less /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta
+```
+
+* フェージング済みVCF
+```
+
 ```
 
 ### 解析ディレクトリの作成
