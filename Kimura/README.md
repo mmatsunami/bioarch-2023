@@ -134,7 +134,7 @@ grep -h CV log*.out
 ## 4) 主成分分析を実行しよう
 ### 4-1)aliasの設定
 ```
-alias converf="singularity exec -B /lustre8/home,/home /usr/local/biotools/e/eigensoft\:8.0.0--h2469040_0 convertf"
+alias convertf="singularity exec -B /lustre8/home,/home /usr/local/biotools/e/eigensoft\:8.0.0--h2469040_0 convertf"
 alias smartpca="singularity exec -B /lustre8/home,/home /usr/local/biotools/e/eigensoft\:8.0.0--h2469040_0 smartpca"
 ```
 ### 4-2)BEDファイルをEIGENSTRATフォーマット(GENOファイル)に変換
