@@ -89,7 +89,7 @@ mv samples/*_R2.2.fq.gz samples/*.2.fq.gz
 
 しかし、このコマンドを100回も打ち込んで動かすのは大変なので、シェルスクリプトを作成し、slurmでjobを投げることで並列計算させましょう。
 
-まず、シェルスクリプト`process_radtags_all.sh`を作成します。
+まず、下記のシェルスクリプト`process_radtags_all.sh`がこのgithubのscripts directoryにあるので、local-PCにダウンロードして、NIG-PCにアップロードして下さい。
 
 ```sh process_radtags_all.sh
 #!/bin/bash
@@ -165,7 +165,7 @@ ustacks -t gzfastq -f samples/*.1.fq.gz -o denovo_map -i 1 --name * -M 5 -m 3
 
 **クラスタリングの際にリード間でどれだけのミスマッチを許すかを指定するパラメータ*M*とどれだけのカバレージで読んでいるリードを用いるかを指定するパラメータ*m*は、結果への影響が大きいので、注意して設定して下さい。**
 
-先ほどと同じようにシェルスクリプト`ustaks_all.sh`を作成します。
+先ほどと同じようにシェルスクリプト`ustaks_all.sh`をダウンロードしてNIG-PCにアップロードします。
 
 ```sh ustaks_all.sh
 #!/bin/bash
@@ -288,7 +288,7 @@ ___
 
 先ほどと同じようにシェルスクリプトを作って、slurmで処理しましょう。
 
-まず、下記のシェルスクリプト`bwa_all.sh`を作成します。
+まず、下記のシェルスクリプト`bwa_all.sh`がこのgithubのscripts directoryにあるので、local-PCにダウンロードして、NIG-PCにアップロードして下さい。
 
 ```sh
 #!/bin/bash
