@@ -103,7 +103,6 @@ alias admixture="singularity exec -B /lustre8/home,/home /usr/local/biotools/a/a
 plink --vcf yaponesia.vcf.gz --keep-allele-order --make-bed --out yaponesia
 ```
 bed,bim,famのファイルが生成されたことを確認。
-```
 SNPidをchr_positionで埋める。
 ```
 awk '{print $1,$1"_"$4,$3,$4,$5,$6}' yaponesia.bim > yaponesia_id.bim
