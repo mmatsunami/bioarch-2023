@@ -189,14 +189,31 @@ zcat JPT.phased.chr22.ibd.gz | sort -k8nr | less -S
 
 * 1~21番染色体のIBD sharingをまとめて計算する
 ```
-for cn in {1..21};do java -jar /home/bioarchaeology-pg/kawai/hap-ibd.jar gt=/home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr$cn.vcf.gz map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr$cn.GRCh38.map nthreads=8 out=JPT.phased.chr$cn; done
+for cn in {1..21};do
+  java -jar /home/bioarchaeology-pg/kawai/hap-ibd.jar gt=/home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr$cn.vcf.gz map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr$cn.GRCh38.map nthreads=8 out=JPT.phased.chr$cn;
+done
 ```
 >[!NOTE]
 >この例ではbashのfor構文を使って逐次自動的にコマンドを入力しています。
 >遺伝研スパコン一般環境ではジョブスケジューラー(UGE)を使って、一度に複数の計算ノードで実行することが可能です。
 >スパコンを使ったゲノム解析ではこのような分散処理を活用することによって解析時間を大幅に減らすことができます。
 
+* IBDNeの実行
+```
+zcat JPT.phased.chr{1..22}.ibd.gz | java -jar /home/bioarchaeology-pg/kawai/ibdne.23Apr20.ae9.jar map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.GRCh38.map out=JPT nthreads=8
+```
 
+* IBENeの結果の確認
+```
+less JPT.region.excl
+# 自動QCで取り除かれた領域
+
+less JPT.pair.excl
+# 自動QCで取り除かれたサンプルペア
+
+less JPT.ne
+# IBDNeの結果
+```
 
 ## 実習
 [ヒトゲノムの公共データ](https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット)を使ってPSMCで解析する。
