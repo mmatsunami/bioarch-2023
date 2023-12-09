@@ -39,6 +39,8 @@ zless yaponesia.vcf.gz
 ``` 
 ↑↓で移動、qで停止。
 yaponesia.vcf.gzを自分のPCにダウンロード
+https://drive.google.com/file/d/1VDOa6ynLXHQpAm7w9lRXIioRIhMTaHEM/view?ts=6571a996
+
 <br><br>
 ## 2)遺伝距離行列を計算して系統ネットワークを作ろう
 ### 2-1)Rのパッケージをインストール
