@@ -69,6 +69,15 @@ java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar gt=/home/bioarcha
 
 先ほどの入力データとの違いを確認する。
 
+### ヒトゲノムデータの確認
+国際1000人ゲノム計画の日本人集団(JPT)の全ゲノムシークエンス解析で得られたフェージング済みのVCFを確認します。
+`/home/bioarchaeology-pg/kawai/JPT`
+
+```
+bcftools view /home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr1.vcf.gz | less -S
+```
+後でIBDNeを使った人口動態推定に使います。
+
 
 
 
