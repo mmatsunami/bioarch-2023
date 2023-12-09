@@ -25,7 +25,7 @@ SplitTree4のインストール (https://software-ab.informatik.uni-tuebingen.de
 ### 1-1)計算機サーバへの接続
 ### 1-2)テストファイルディレクトリのコピー
 ```
-cpp -r /home/bioarchaeology-pg/popstruct popstruct
+cp -r /home/bioarchaeology-pg/popstruct popstruct
 ```
 ### 1-3)ディレクトリの移動
 ```
