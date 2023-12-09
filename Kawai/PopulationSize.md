@@ -66,19 +66,19 @@ less /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta
 
 * フェージング済みVCF
 ```
-
+bcftools view /home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr1.vcf.gz | less -S
 ```
 
 ### 解析ディレクトリの作成
 ```
 # ホームディレクトに移動して作業ディレクトリを作成
 cd
-mkdir psmc
-cd psmc
+mkdir popsize
+cd popsize
 ```
 
 ## 実行
-### データの準備
+### データの準備(PSMC)
 * `bcftools`でBAMファイルからバリアント情報を抽出して、コンセンサス配列をfastq形式で抽出する。
 ```
 bcftools mpileup -Ou -f /home/bioarchaeology-pg/kawai/yaponesia_reference.fasta /home/bioarchaeology-pg/kawai/FK01.bam | \
@@ -106,7 +106,7 @@ fq2psmcfa FK01.fq.gz > FK01.psmcfa
 ```
 less FK01.psmcfa
 ```
-* PSMCの実行
+### PSMCの実行
 ```
 psmc -t10 -p "10+5*3+4" -o FK01.psmc FK01.psmcfa
 ```
@@ -144,6 +144,23 @@ psmc_plot.pl -u 2.0e-07 -g 1 -x 100 -L -p FK01 FK01.psmc
 scp username-pg@gwa.ddbj.nig.ac.jp:/home/username-pg/psmc/FK01.pdf .
 ```
 WinSCP(windows)やcyberduck(mac)で転送することも可能です。
+
+### IBDNeの実行
+#### IBD sharingの計算
+22番染色体のIBD sharingをhap-ibdで計算します。
+```
+java -jar hap-ibd.jar gt=JPT.phased.chr22.vcf.gz \
+  map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr22.GRCh38.map \
+  out=JPT.phased.chr22 nthreads=8
+```
+>[!NOTE]
+>gt= : 入力するフェージング済みのVCFファイル
+>
+>map= : 遺伝距離が入ったファイル
+>
+>out= : 出力ファイルのプレフィックス（ibd.txt.gz, hbd.txt.gzが作られる）
+>
+>nthreads= : 計算に使うCPU数
 
 ## 実習
 [ヒトゲノムの公共データ](https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット)を使ってPSMCで解析する。
