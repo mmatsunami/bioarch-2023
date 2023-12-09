@@ -5,6 +5,8 @@
 <br><br>
 ## 0)事前の準備  
 WinSCP(Windows)またはCyberduck(Mac)のインストール 
+WinSCPの遺伝研スパコンでの設定
+https://www.genome-sci.jp/old2010-2015/seminar2015/seminar2015_2_Win.pdf
 
 Rのインストール (https://www.r-project.org/)
 
@@ -145,8 +147,10 @@ familynames:     NO
 ```
 convertf -p par.PED.EIGENSTRAT
 ```
-### 4-3)集団情報を加えたindファイル（merged.pop.ind）を用意
-```less yaponesia.pop.ind```  
+### 4-3)集団情報を加えたindファイル（yaponesia.pop.ind）を用意
+```
+less yaponesia.pop.ind
+```  
 qで停止。
 
 ### 4-4)smartpcaの実行
@@ -160,7 +164,9 @@ evecoutname:     pca_yaponesia.evec
 evaloutname:     pca_yaponesia.eval  
 numoutevec:      5  
 #########################
-```EIG/bin/smartpca -p par.smartpca >pca_yaponesia.log``` 
+```
+smartpca -p par.smartpca >pca_yaponesia.log
+``` 
 ### 4-7)Rでプロットの作成
 ```
 fn = "pca_yaponesia.evec"
