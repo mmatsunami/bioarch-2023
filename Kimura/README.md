@@ -14,8 +14,6 @@ Rのインストール (https://www.r-project.org/)
 SplitTree4のインストール (https://software-ab.informatik.uni-tuebingen.de/download/splitstree4/welcome.html)
 
 以下のソフトウェアのインストールはサーバーを使う場合には不要
-* Plink (https://www.cog-genomics.org/plink/)
-* ADMIXTURE (http://dalexander.github.io/admixture/index.html)
 * Plink ( https://www.cog-genomics.org/plink/)
 * ADMIXTURE ( http://dalexander.github.io/admixture/index.html)
 * EIGENSOFT (https://github.com/DReichLab/EIG.git)
