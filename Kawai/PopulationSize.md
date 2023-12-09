@@ -147,7 +147,7 @@ WinSCP(windows)やcyberduck(mac)で転送することも可能です。
 
 ### IBDNeの実行
 #### IBD sharingの計算
-22番染色体のIBD sharingをhap-ibdで計算します。
+* 22番染色体のIBD sharingをhap-ibdで計算します。
 ```
 java -jar hap-ibd.jar gt=JPT.phased.chr22.vcf.gz \
   map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr22.GRCh38.map \
@@ -161,6 +161,16 @@ java -jar hap-ibd.jar gt=JPT.phased.chr22.vcf.gz \
 >out= : 出力ファイルのプレフィックス（ibd.txt.gz, hbd.txt.gzが作られる）
 >
 >nthreads= : 計算に使うCPU数
+
+* 結果の確認
+```
+zless -S JPT.phased.chr22.ibd.gz
+```
+|sample1|hap1|sample2|hap2|strat|end|IBD(cM)|
+|NA18971|1|NA19057|2|chr22|36125892|36865529|2.198|
+|NA18948|2|NA18971|1|chr22|36125892|36947811|2.435|
+|NA18943|1|NA19088|2|chr22|36542080|37181105|2.253|
+
 
 ## 実習
 [ヒトゲノムの公共データ](https://sc.ddbj.nig.ac.jp/advanced_guides/advanced_guide_2023#ヒト全ゲノム解析の公共データの再解析データセット)を使ってPSMCで解析する。
