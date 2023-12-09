@@ -149,7 +149,7 @@ WinSCP(windows)やcyberduck(mac)で転送することも可能です。
 #### IBD sharingの計算
 * 22番染色体のIBD sharingをhap-ibdで計算します。
 ```
-java -jar hap-ibd.jar gt=JPT.phased.chr22.vcf.gz \
+java -jar hap-ibd.jar gt=/home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr22.vcf.gz \
   map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr22.GRCh38.map \
   out=JPT.phased.chr22 nthreads=8
 ```
@@ -186,6 +186,16 @@ zcat JPT.phased.chr22.ibd.gz | sort -k8nr | less -S
 | .. | .. | .. | .. | .. | .. | .. | .. |
 
 この例ではセントロメア領域に重なっており、偽陽性の可能性が高い。IBDNeは自動的に偽陽性を取り除くがセントロメア領域を除くなど事前処理をした方が良い。
+
+* 1~21番染色体のIBD sharingをまとめて計算する
+```
+for cn in {1..21};do java -jar /home/bioarchaeology-pg/kawai/hap-ibd.jar gt=/home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr$cn.vcf.gz map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr$cn.GRCh38.map nthreads=8 out=JPT.phased.chr$cn; done
+```
+>[!NOTE]
+>この例ではbashのfor構文を使って逐次自動的にコマンドを入力しています。
+>一般環境ではジョブスケジューラー(UGE)を使って、一度に複数の計算ノードで実行することが可能です。
+>スパコンを使ったゲノム解析ではこのような分散処理を活用することによって解析時間を大幅に減らすことができます。
+
 
 
 ## 実習
