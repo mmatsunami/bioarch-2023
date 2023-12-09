@@ -80,7 +80,7 @@ zcat SP01_R2.clean.fastq.gz | head -1000000 | gzip > SP01_R2.reduced.fastq.gz
 ### bwaによるマッピング
 今回は，最もよく使われているマッピングソフトウェア，bwaを利用します．まずは次のコマンドでワーキングディレクトリにゲノムのリファレンス配列をコピーします．
 ```bash
-cp Osada/yaponesia_genome.fasta ./
+cp Osada/yaponesia_reference.fasta ./
 ```
 bwaでインデックスファイルを作成します．この作業により，相同性検索の高速化が可能です．
 ```bash
