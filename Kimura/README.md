@@ -50,12 +50,12 @@ https://drive.google.com/file/d/1VDOa6ynLXHQpAm7w9lRXIioRIhMTaHEM/view?ts=6571a9
 https://www.bioconductor.org/install/
 を参照
 SNPRelate, SeqArray, gdsfmt, phangorn
+https://academic.oup.com/bioinformatics/article/28/24/3326/245844?login=true
 ```
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install(version = "3.18")
 BiocManager::install("SNPRelate")
-https://academic.oup.com/bioinformatics/article/28/24/3326/245844?login=true
 BiocManager::install("SeqArray")
 BiocManager::install("gdsfmt")
 install.packages("phangorn")
