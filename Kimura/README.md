@@ -4,7 +4,8 @@
 
 <br><br>
 ## 0)事前の準備  
-WinSCP(Windows)またはCyberduck(Mac)のインストール 
+WinSCP(Windows)またはCyberduck(Mac)のインストール
+
 WinSCPの遺伝研スパコンでの設定
 https://www.genome-sci.jp/old2010-2015/seminar2015/seminar2015_2_Win.pdf
 
