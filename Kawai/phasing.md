@@ -32,7 +32,9 @@ java --version
 今回はスパコンにダウンロード済みのファイルを使います。
 
 #### プログラムの確認
-```java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar```
+```
+java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar
+```
 
 ヘルプメッセージが表示されることを確認
 
@@ -65,7 +67,9 @@ java -jar /home/bioarchaeology-pg/kawai/beagle.22Jul22.46e.jar gt=/home/bioarcha
 終了後にフェージング結果（`yaponesia_SP_250.phased.vcf.gz`）がカレントディレクトリにできていることを確認する。
 
 ### フェージング結果の確認
-`bcftools view yaponesia_SP_250.phased.vcf.gz | less -S`
+```
+bcftools view yaponesia_SP_250.phased.vcf.gz | less -S
+```
 
 先ほどの入力データとの違いを確認する。
 
