@@ -169,6 +169,7 @@ numoutevec:      5
 smartpca -p par.smartpca >pca_yaponesia.log
 ``` 
 ### 4-7)Rでプロットの作成
+pca_yaponesia.evecを自分のPCにダウンロード
 ```
 fn = "pca_yaponesia.evec"
 evec = read.table(fn, col.names=c("Sample", "PC1", "PC2", "PC3", "PC4", "PC5", "Pop"))
@@ -177,7 +178,6 @@ plot(evec$PC1, evec$PC2, col=factor(evec$Pop))
 legend("bottomright", legend=levels(factor(evec$Pop)), col=1:length(levels(factor(evec$Pop))), pch=20)
 dev.off()
 ```
-画像ファイルPC1vsPC2.pngを端末に転送して開く。
 <br><br>
 ### ハンズオンは以上になります。お疲れさまでした。
 
