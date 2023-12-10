@@ -149,7 +149,7 @@ WinSCP(windows)やcyberduck(mac)で転送することも可能です。
 #### IBD sharingの計算
 * 22番染色体のIBD sharingをhap-ibdで計算します。
 ```
-java -jar hap-ibd.jar gt=/home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr22.vcf.gz \
+java -jar /home/bioarchaeology-pg/kawai/hap-ibd.jar gt=/home/bioarchaeology-pg/kawai/JPT/JPT.phased.chr22.vcf.gz \
   map=/home/bioarchaeology-pg/kawai/genetic_map_GRCh38/gmap.chr22.GRCh38.map \
   out=JPT.phased.chr22 nthreads=8
 ```
